@@ -29,7 +29,14 @@ export const PreferencesSchema = z.object({
     .transform((a) => [...new Set(a.filter((x): x is number => typeof x === 'number' && Number.isInteger(x) && x > 0))]),
   hideUnowned: z.boolean().catch(DEFAULT_PREFERENCES.hideUnowned),
   familiarityWeight: z.union([z.literal(0.5), z.literal(1), z.literal(1.5)]).catch(DEFAULT_PREFERENCES.familiarityWeight),
-  motion: z.enum(['system', 'reduced', 'full']).catch(DEFAULT_PREFERENCES.motion)
+  motion: z.enum(['system', 'reduced', 'full']).catch(DEFAULT_PREFERENCES.motion),
+  sendBuild: z
+    .object({
+      items: z.boolean().catch(DEFAULT_PREFERENCES.sendBuild.items),
+      runes: z.boolean().catch(DEFAULT_PREFERENCES.sendBuild.runes),
+      spells: z.boolean().catch(DEFAULT_PREFERENCES.sendBuild.spells)
+    })
+    .catch({ ...DEFAULT_PREFERENCES.sendBuild })
 })
 
 export function parsePreferences(raw: unknown): Preferences {

@@ -181,6 +181,8 @@ export interface Preferences {
   /** Peso das preferências pessoais: 0.5 (meta), 1 (equilibrado), 1.5 (conforto). */
   familiarityWeight: 0.5 | 1 | 1.5
   motion: 'system' | 'reduced' | 'full'
+  /** O que "Usar esta build" envia ao cliente do jogo (feitiços ficam desligados por padrão). */
+  sendBuild: { items: boolean; runes: boolean; spells: boolean }
 }
 
 export const DEFAULT_PREFERENCES: Preferences = {
@@ -192,7 +194,8 @@ export const DEFAULT_PREFERENCES: Preferences = {
   excluded: [],
   hideUnowned: true,
   familiarityWeight: 1,
-  motion: 'system'
+  motion: 'system',
+  sendBuild: { items: true, runes: true, spells: false }
 }
 
 /** Dados pessoais vindos do cliente (somente leitura). */
@@ -279,6 +282,8 @@ export interface RecommendationResult {
   excludedCount: number
   warnings: Caveat[]
   position: Position | null
+  /** Por que o 1º está no topo (comparado ao 2º). */
+  rankExplanation: import('./explain-rank').RankExplanation | null
   /** Distribuição do oponente de rota (para exibição da incerteza). */
   laneOpponentDistribution: { champion: number; probability: number }[]
   provenance: Provenance | null

@@ -7,6 +7,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { makeCatalog } from '../src/core/catalog'
 import { deriveTraits, type ChampionTraits } from '../src/core/traits'
 
 const here = __dirname
@@ -34,6 +35,7 @@ interface Overrides {
   dive: Record<string, number>
   hypercarry: string[]
   damageSplit: Record<string, number>
+  sustain: Record<string, number>
 }
 
 async function main(): Promise<void> {
@@ -77,6 +79,11 @@ async function main(): Promise<void> {
     set('peel')
     set('disengage')
     set('dive')
+  const sus = overrides.sustain[c.key]
+  if (sus != null) {
+    t.sustain = sus
+    curated = true
+  }
     if (overrides.hypercarry.includes(c.key)) {
       t.hypercarry = true
       curated = true
@@ -90,6 +97,15 @@ async function main(): Promise<void> {
     if (curated) t.source = 'curated'
     traits[c.id] = t
   }
+
+  const [items, runes, spells] = await Promise.all([
+    getJson<{ data: never }>(`https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/item.json`),
+    getJson<never>(`https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`),
+    getJson<{ data: never }>(`https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`)
+  ])
+  const catalog = makeCatalog(version, items.data, runes, spells.data)
+  writeFileSync(resolve(out, 'catalog.json'), JSON.stringify(catalog))
+  console.log(`Catálogo: ${Object.keys(catalog.items).length} itens, ${Object.keys(catalog.runes).length} runas, ${Object.keys(catalog.spells).length} feitiços`)
 
   const meta = { ddragonVersion: version, generatedAt: new Date().toISOString(), traitsWithoutSource: missing }
   writeFileSync(resolve(out, 'roster.json'), JSON.stringify({ ...meta, champions: roster }, null, 1))

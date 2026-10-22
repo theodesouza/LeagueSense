@@ -8,6 +8,10 @@ import type { AppInfo, RosterPayload } from '@shared/api'
 import { CH, IMG_SCHEME, RIOT_DISCLAIMER } from '@shared/channels'
 import rosterJson from '@core/data/roster.json'
 import traitsJson from '@core/data/traits.json'
+import type { ApplyBuildRequest } from '@shared/api'
+import bundledCatalogJson from '@core/data/catalog.json'
+import type { Catalog } from '@core/build-types'
+import { BuildService } from './build-service'
 import { MemoryCache } from './cache'
 import { DiskCache } from './disk-cache'
 import { DataDragon, patchOf } from './ddragon'
@@ -36,6 +40,7 @@ protocol.registerSchemesAsPrivileged([{ scheme: IMG_SCHEME, privileges: { standa
 
 const roster = rosterJson as unknown as { ddragonVersion: string; champions: ChampionInfo[] }
 const traits = (traitsJson as unknown as { traits: TraitsTable }).traits
+const bundledCatalog = bundledCatalogJson as unknown as Catalog
 
 const faultyFetch = (match: string): typeof fetch => {
   const real: typeof fetch = (...a) => fetch(...a)
@@ -58,9 +63,29 @@ const images = new ImageStore(join(userData, 'images'), fault ? { fetchImpl: fau
 
 const mcp = new McpClient(fault ? { fetchImpl: faultyFetch('mcp-api.op.gg') } : {})
 const liveStats = new StatsService({ provider: new OpggProvider(mcp), cache, currentPatch: () => dd.patch })
+const demoProvider = new DemoProvider(roster.champions, traits, patchOf(roster.ddragonVersion) ?? '0.0', 120, bundledCatalog)
 const demoStats = new StatsService({
-  provider: new DemoProvider(roster.champions, traits, patchOf(roster.ddragonVersion) ?? '0.0', 120),
+  provider: demoProvider,
   cache: new MemoryCache(),
+  currentPatch: () => patchOf(roster.ddragonVersion)
+})
+
+const keyOf = (id: number): string | undefined => roster.champions.find((c) => c.id === id)?.key
+const liveBuilds = new BuildService({
+  provider: new OpggProvider(mcp),
+  cache,
+  catalog: () => dd.catalog(bundledCatalog).then((r) => r.catalog),
+  enemyTips: (id) => {
+    const k = keyOf(id)
+    return k ? dd.enemyTips(k) : Promise.resolve([])
+  },
+  currentPatch: () => dd.patch
+})
+const demoBuilds = new BuildService({
+  provider: demoProvider,
+  cache: new MemoryCache(),
+  catalog: () => Promise.resolve(bundledCatalog),
+  enemyTips: () => Promise.resolve(['Dica de demonstração (fictícia): jogue com cautela quando a habilidade principal do oponente estiver disponível.']),
   currentPatch: () => patchOf(roster.ddragonVersion)
 })
 
@@ -126,6 +151,32 @@ const PlanSchema = z.object({
   extraBase: z.array(z.number().int().positive()).max(80)
 })
 
+const BuildRequestSchema = z.object({
+  champion: z.number().int().positive(),
+  position: z.enum(POSITIONS),
+  elo: z.enum(ELO_TIERS),
+  opponent: z.number().int().positive().nullable()
+})
+
+const id = z.number().int().positive().max(100_000)
+const ApplyBuildSchema = z.object({
+  champion: id,
+  championName: z.string().min(1).max(40),
+  buildTitle: z.string().min(1).max(40),
+  items: z.array(z.object({ id, role: z.enum(['inicial', 'botas', 'principal', 'situacional']) })).max(40),
+  runes: z
+    .object({
+      primaryStyle: id,
+      primaryRunes: z.array(id).length(4),
+      secondaryStyle: id,
+      secondaryRunes: z.array(id).length(2),
+      shards: z.array(id).length(3)
+    })
+    .nullable(),
+  spells: z.array(id).length(2).nullable(),
+  options: z.object({ items: z.boolean(), runes: z.boolean(), spells: z.boolean() })
+})
+
 const EXTERNAL_HOSTS = new Set(['developer.riotgames.com', 'support-developer.riotgames.com', 'github.com', 'hextechdocs.dev'])
 
 let rosterPromise: Promise<RosterPayload> | null = null
@@ -163,6 +214,12 @@ function registerIpc(): void {
   ipcMain.handle(CH.lcuDraft, guard(() => lcu.getDraft()))
   ipcMain.handle(CH.lcuPlayer, guard(() => lcu.getPlayer()))
   ipcMain.handle(CH.lcuReconnect, guard(() => lcu.reconnect()))
+  ipcMain.handle(
+    CH.buildsRequest,
+    guard((req: unknown, mode: 'live' | 'demo') => (mode === 'demo' ? demoBuilds : liveBuilds).get(BuildRequestSchema.parse(req)))
+  )
+  ipcMain.handle(CH.lcuApplyBuild, guard((req: unknown) => lcu.applyBuild(ApplyBuildSchema.parse(req) satisfies ApplyBuildRequest)))
+  ipcMain.handle(CH.lcuClearBuilds, guard(() => lcu.clearBuilds()))
 
   settings.onChange((p) => broadcast(CH.prefsChanged, p))
   for (const s of [liveStats, demoStats]) {
@@ -177,9 +234,18 @@ function registerIpc(): void {
 function registerImageProtocol(): void {
   protocol.handle(IMG_SCHEME, async (req) => {
     // leaguesense-img://champion/{square|splash|loading}/{chave}/{versão}
+    // leaguesense-img://{item|spell|rune}/{chave}/{versão}   (rune: caminho do ícone em base64url)
     const u = new URL(req.url)
-    const [kind, key, version] = u.pathname.split('/').filter(Boolean)
-    if (u.hostname !== 'champion' || !kind || !key || !version || !['square', 'splash', 'loading'].includes(kind)) return new Response(null, { status: 400 })
+    const parts = u.pathname.split('/').filter(Boolean)
+    let kind: string | undefined
+    let key: string | undefined
+    let version: string | undefined
+    if (u.hostname === 'champion') [kind, key, version] = parts
+    else if (['item', 'spell', 'rune'].includes(u.hostname)) {
+      kind = u.hostname
+      ;[key, version] = parts
+    }
+    if (!kind || !key || !version || !['square', 'splash', 'loading', 'item', 'spell', 'rune'].includes(kind)) return new Response(null, { status: 400 })
     const r = await images.get(kind as ImageKind, key, version)
     if (!r) return new Response(null, { status: 404 })
     return new Response(new Uint8Array(r.data), { status: 200, headers: { 'content-type': r.mime, 'cache-control': 'public, max-age=86400' } })

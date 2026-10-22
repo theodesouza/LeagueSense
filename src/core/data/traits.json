@@ -1,6 +1,6 @@
 {
  "ddragonVersion": "16.21.1",
- "generatedAt": "2026-10-22T18:17:09.693Z",
+ "generatedAt": "2026-10-22T20:46:07.097Z",
  "traitsWithoutSource": [
   "Locke",
   "Zaahen"
@@ -17,6 +17,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -34,6 +35,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0.6,
    "hypercarry": false,
    "positions": [
     "top"
@@ -51,6 +53,7 @@
    "peel": 0.6,
    "disengage": 0.7,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -69,6 +72,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -88,6 +92,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -105,6 +110,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -122,6 +128,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -139,12 +146,13 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.8,
    "hypercarry": false,
    "positions": [
     "mid",
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "9": {
    "ad": 0,
@@ -157,6 +165,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0.5,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -174,6 +183,7 @@
    "peel": 0.5,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "top"
@@ -191,6 +201,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "jungle"
@@ -208,6 +219,7 @@
    "peel": 0.7,
    "disengage": 0.7,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -225,6 +237,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -242,6 +255,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -259,6 +273,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -276,6 +291,7 @@
    "peel": 0.8,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 1,
    "hypercarry": false,
    "positions": [
     "support"
@@ -293,6 +309,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "jungle",
@@ -312,6 +329,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -330,6 +348,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0.8,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -348,6 +367,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -365,6 +385,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -382,6 +403,7 @@
    "peel": 0,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -400,6 +422,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.7,
+   "sustain": 0.5,
    "hypercarry": false,
    "positions": [
     "top"
@@ -417,6 +440,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -435,6 +459,7 @@
    "peel": 0.7,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -452,6 +477,7 @@
    "peel": 0.7,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -469,6 +495,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -486,6 +513,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -503,6 +531,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -521,6 +550,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -538,6 +568,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -555,6 +586,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -573,6 +605,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -590,6 +623,7 @@
    "peel": 0,
    "disengage": 0.6,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -607,6 +641,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.9,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -625,11 +660,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.6,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "37": {
    "ad": 0,
@@ -642,6 +678,7 @@
    "peel": 0.7,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0.6,
    "hypercarry": false,
    "positions": [
     "support"
@@ -659,6 +696,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -676,6 +714,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0.4,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -694,6 +733,7 @@
    "peel": 1,
    "disengage": 1,
    "dive": 0,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "support"
@@ -711,6 +751,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -728,6 +769,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "mid"
@@ -745,6 +787,7 @@
    "peel": 0.8,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -764,6 +807,7 @@
    "peel": 0.9,
    "disengage": 0.7,
    "dive": 0,
+   "sustain": 0.5,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -782,6 +826,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -800,6 +845,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -818,13 +864,14 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.8,
    "hypercarry": false,
    "positions": [
     "adc",
     "mid",
     "support"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "51": {
    "ad": 1,
@@ -837,6 +884,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -854,6 +902,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -871,6 +920,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -890,6 +940,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -907,6 +958,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.9,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -924,6 +976,7 @@
    "peel": 0,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -942,11 +995,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "59": {
    "ad": 1,
@@ -959,6 +1013,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -976,6 +1031,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -993,6 +1049,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1010,6 +1067,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1028,6 +1086,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1047,6 +1106,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1064,6 +1124,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -1082,6 +1143,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -1100,6 +1162,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1117,6 +1180,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1135,6 +1199,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -1154,11 +1219,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "76": {
    "ad": 0,
@@ -1171,6 +1237,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1188,6 +1255,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1206,6 +1274,7 @@
    "peel": 0.8,
    "disengage": 1,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1224,6 +1293,7 @@
    "peel": 0,
    "disengage": 0.6,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1243,6 +1313,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1263,6 +1334,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -1280,11 +1352,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.4,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "83": {
    "ad": 1,
@@ -1297,6 +1370,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -1314,6 +1388,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -1332,6 +1407,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "top"
@@ -1349,6 +1425,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -1366,6 +1443,7 @@
    "peel": 0.4,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -1383,6 +1461,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1400,6 +1479,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1417,6 +1497,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -1434,6 +1515,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -1451,6 +1533,7 @@
    "peel": 0.7,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support",
@@ -1469,6 +1552,7 @@
    "peel": 0.4,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -1487,6 +1571,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -1505,6 +1590,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1522,6 +1608,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1539,6 +1626,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "jungle"
@@ -1556,6 +1644,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.9,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1573,6 +1662,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1591,6 +1681,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1609,6 +1700,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -1626,6 +1718,7 @@
    "peel": 0.4,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -1643,6 +1736,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1660,6 +1754,7 @@
    "peel": 0,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1677,6 +1772,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -1694,6 +1790,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "adc",
@@ -1712,6 +1809,7 @@
    "peel": 1,
    "disengage": 0.8,
    "dive": 0,
+   "sustain": 0.2,
    "hypercarry": false,
    "positions": [
     "support"
@@ -1729,6 +1827,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -1746,6 +1845,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1763,6 +1863,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -1780,11 +1881,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "126": {
    "ad": 1,
@@ -1797,6 +1899,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "mid",
@@ -1815,6 +1918,7 @@
    "peel": 0,
    "disengage": 0.6,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1832,6 +1936,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -1850,6 +1955,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "top"
@@ -1867,6 +1973,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1884,6 +1991,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1901,11 +2009,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0.6,
    "hypercarry": false,
    "positions": [
     "jungle"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "142": {
    "ad": 0,
@@ -1918,6 +2027,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -1935,6 +2045,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -1952,6 +2063,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -1969,6 +2081,7 @@
    "peel": 0.6,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0.4,
    "hypercarry": false,
    "positions": [
     "adc",
@@ -1987,6 +2100,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -2004,6 +2118,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -2023,6 +2138,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "adc",
@@ -2042,6 +2158,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -2060,6 +2177,7 @@
    "peel": 0.7,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -2078,6 +2196,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support",
@@ -2096,6 +2215,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "mid"
@@ -2113,6 +2233,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.6,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2130,6 +2251,7 @@
    "peel": 1,
    "disengage": 0.8,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2147,6 +2269,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2164,6 +2287,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "jungle"
@@ -2181,6 +2305,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2198,6 +2323,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2215,6 +2341,7 @@
    "peel": 0.6,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support",
@@ -2233,6 +2360,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.9,
+   "sustain": 0.8,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2250,6 +2378,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2267,6 +2396,7 @@
    "peel": 0.5,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -2285,6 +2415,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2302,6 +2433,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -2320,11 +2452,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.5,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "245": {
    "ad": 0,
@@ -2337,6 +2470,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -2355,6 +2489,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -2372,6 +2507,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2389,11 +2525,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 1,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "267": {
    "ad": 0,
@@ -2406,6 +2543,7 @@
    "peel": 0.9,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0.5,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2423,6 +2561,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "mid"
@@ -2440,6 +2579,7 @@
    "peel": 1,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0.8,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2457,6 +2597,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2474,6 +2615,7 @@
    "peel": 0.8,
    "disengage": 0.6,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2491,11 +2633,12 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.4,
    "hypercarry": false,
    "positions": [
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "421": {
    "ad": 1,
@@ -2508,6 +2651,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.8,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2525,6 +2669,7 @@
    "peel": 0.8,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2542,6 +2687,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2559,6 +2705,7 @@
    "peel": 0.6,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2576,6 +2723,7 @@
    "peel": 0.7,
    "disengage": 0,
    "dive": 0.6,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2593,6 +2741,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2610,6 +2759,7 @@
    "peel": 0,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -2627,12 +2777,13 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0.5,
    "hypercarry": false,
    "positions": [
     "mid",
     "top"
    ],
-   "source": "derived"
+   "source": "curated"
   },
   "518": {
    "ad": 0,
@@ -2645,6 +2796,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -2663,6 +2815,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2680,6 +2833,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2697,6 +2851,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2714,6 +2869,7 @@
    "peel": 0,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"
@@ -2731,6 +2887,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -2749,6 +2906,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -2766,6 +2924,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -2784,6 +2943,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc"
@@ -2801,6 +2961,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0.3,
    "hypercarry": false,
    "positions": [
     "top"
@@ -2818,6 +2979,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0.5,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle"
@@ -2835,6 +2997,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "jungle",
@@ -2853,6 +3016,7 @@
    "peel": 0.9,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2870,6 +3034,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -2888,6 +3053,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "adc"
@@ -2905,6 +3071,7 @@
    "peel": 0.9,
    "disengage": 0.7,
    "dive": 0.5,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "top"
@@ -2922,6 +3089,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": true,
    "positions": [
     "adc",
@@ -2941,6 +3109,7 @@
    "peel": 1,
    "disengage": 0.5,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "support"
@@ -2958,6 +3127,7 @@
    "peel": 0,
    "disengage": 0.4,
    "dive": 0,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid",
@@ -2976,6 +3146,7 @@
    "peel": 0,
    "disengage": 0,
    "dive": 1,
+   "sustain": 0,
    "hypercarry": false,
    "positions": [
     "mid"

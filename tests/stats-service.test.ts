@@ -51,6 +51,12 @@ class FakeProvider implements StatsProvider {
   synergies(champion: number, mine: Position, ally: Position): Promise<TableEntries> {
     return this.track(`s:${champion}:${mine}:${ally}`, () => ({ entries: { 98: { play: 200, win: 110 } }, patch: null }))
   }
+  buildGeneral(): Promise<never> {
+    return Promise.reject(new Error('não usado nestes testes'))
+  }
+  matchupGuide(): Promise<never> {
+    return Promise.reject(new Error('não usado nestes testes'))
+  }
   patch(): Promise<string | null> {
     return this.track('patch', () => '16.21')
   }

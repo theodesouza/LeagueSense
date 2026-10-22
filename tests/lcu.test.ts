@@ -167,6 +167,7 @@ class Harness {
     const http: LcuHttpLike = {
       tlsMode: 'pinned',
       close: () => undefined,
+      send: () => Promise.resolve(null),
       get: <T>(path: string): Promise<T | null> =>
         new Promise((resolve) => {
           const answer = (): void => resolve((this.responses.has(path) ? this.responses.get(path) : null) as T | null)

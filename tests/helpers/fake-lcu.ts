@@ -27,6 +27,18 @@ export class FakeLcu {
   /** Atrasos artificiais (ms) por caminho, para simular respostas fora de ordem. */
   delays = new Map<string, number>()
   requests: string[] = []
+  /** Escritas recebidas (método, caminho, corpo já decodificado). */
+  writes: { method: string; path: string; body: unknown }[] = []
+  /** Conta do invocador local, itens e páginas de runas (para testar o envio de builds). */
+  summoner = { summonerId: 4242, accountId: 777 }
+  itemSets: { timestamp: number; accountId: number; itemSets: Record<string, unknown>[] } = { timestamp: 1, accountId: 777, itemSets: [] }
+  pages: { id: number; name: string; isEditable: boolean; isDeletable: boolean; primaryStyleId?: number; subStyleId?: number; selectedPerkIds?: number[] }[] = []
+  pageCapacity = 3
+  currentPage = 0
+  mySelection: unknown = null
+  /** caminho → status HTTP a devolver em escritas (simula recusa do cliente). */
+  failWrites = new Map<string, number>()
+  private nextPageId = 100
   subscriptions: string[] = []
   badAuth = 0
   private server!: Server
@@ -53,8 +65,59 @@ export class FakeLcu {
     return ok
   }
 
+  private writeRoute(method: string, path: string, body: unknown): { status: number; body: unknown } {
+    const fail = this.failWrites.get(path)
+    if (fail) return { status: fail, body: { message: 'recusado' } }
+    const sets = /^\/lol-item-sets\/v1\/item-sets\/(\d+)\/sets$/.exec(path)
+    if (sets && method === 'PUT') {
+      const b = body as typeof this.itemSets
+      if (!b || !Array.isArray(b.itemSets)) return { status: 400, body: { message: 'itemSets inválido' } }
+      this.itemSets = { timestamp: this.itemSets.timestamp + 1, accountId: b.accountId, itemSets: b.itemSets }
+      return { status: 204, body: null }
+    }
+    if (path === '/lol-perks/v1/pages' && method === 'POST') {
+      if (this.pages.length >= this.pageCapacity) return { status: 400, body: { message: 'sem espaço' } }
+      const b = body as { name: string; primaryStyleId: number; subStyleId: number; selectedPerkIds: number[] }
+      const page = { id: this.nextPageId++, name: b.name, isEditable: true, isDeletable: true, primaryStyleId: b.primaryStyleId, subStyleId: b.subStyleId, selectedPerkIds: b.selectedPerkIds }
+      this.pages.push(page)
+      return { status: 200, body: page }
+    }
+    const page = /^\/lol-perks\/v1\/pages\/(\d+)$/.exec(path)
+    if (page) {
+      const i = this.pages.findIndex((p) => p.id === Number(page[1]))
+      if (i < 0) return { status: 404, body: { message: 'página inexistente' } }
+      if (method === 'PUT') {
+        const b = body as { name: string; primaryStyleId: number; subStyleId: number; selectedPerkIds: number[] }
+        this.pages[i] = { ...this.pages[i]!, name: b.name, primaryStyleId: b.primaryStyleId, subStyleId: b.subStyleId, selectedPerkIds: b.selectedPerkIds }
+        return { status: 200, body: this.pages[i] }
+      }
+      if (method === 'DELETE') {
+        this.pages.splice(i, 1)
+        return { status: 204, body: null }
+      }
+    }
+    if (path === '/lol-perks/v1/currentpage' && method === 'PUT') {
+      this.currentPage = Number(body)
+      return { status: 204, body: null }
+    }
+    if (path === '/lol-champ-select/v1/session/my-selection' && method === 'PATCH') {
+      if (this.phase !== 'ChampSelect') return { status: 404, body: { message: 'sem seleção' } }
+      this.mySelection = body
+      return { status: 204, body: null }
+    }
+    return { status: 404, body: { message: 'not found' } }
+  }
+
   private route(path: string): { status: number; body: unknown } {
     switch (path) {
+      case '/lol-summoner/v1/current-summoner':
+        return { status: 200, body: this.summoner }
+      case '/lol-perks/v1/pages':
+        return { status: 200, body: this.pages }
+      case '/lol-perks/v1/inventory':
+        return { status: 200, body: { ownedPageCount: this.pages.length, customPageCount: this.pages.length, canAddCustomPage: this.pages.length < this.pageCapacity, isCustomPageCreationUnlocked: true } }
+      case `/lol-item-sets/v1/item-sets/${this.summoner.summonerId}/sets`:
+        return { status: 200, body: this.itemSets }
       case '/lol-gameflow/v1/gameflow-phase':
         return { status: 200, body: this.phase }
       case '/lol-champ-select/v1/session':
@@ -78,15 +141,33 @@ export class FakeLcu {
       return
     }
     const path = req.url ?? ''
-    this.requests.push(path)
-    const { status, body } = this.route(path)
-    const send = (): void => {
-      res.writeHead(status, { 'content-type': 'application/json' })
-      res.end(JSON.stringify(body))
-    }
-    const d = this.delays.get(path)
-    if (d) setTimeout(send, d)
-    else send()
+    const method = req.method ?? 'GET'
+    const chunks: Buffer[] = []
+    req.on('data', (c: Buffer) => chunks.push(c))
+    req.on('end', () => {
+      this.requests.push(path)
+      let result: { status: number; body: unknown }
+      if (method === 'GET') result = this.route(path)
+      else {
+        let parsed: unknown = null
+        const raw = Buffer.concat(chunks).toString('utf8')
+        try {
+          parsed = raw ? JSON.parse(raw) : null
+        } catch {
+          parsed = raw
+        }
+        this.writes.push({ method, path, body: parsed })
+        result = this.writeRoute(method, path, parsed)
+      }
+      const { status, body } = result
+      const send = (): void => {
+        res.writeHead(status, { 'content-type': 'application/json' })
+        res.end(status === 204 || body == null ? undefined : JSON.stringify(body))
+      }
+      const d = this.delays.get(path)
+      if (d) setTimeout(send, d)
+      else send()
+    })
   }
 
   async start(): Promise<void> {

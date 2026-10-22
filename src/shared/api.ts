@@ -4,6 +4,7 @@
  */
 import type { ChampionInfo, Draft, EloTier, PlayerData, Preferences, Position, StatsSnapshot } from '@core/types'
 import type { FetchPlan } from '@core/fetch-plan'
+import type { BuildBundle } from '@core/build-types'
 
 export type SourceName = 'ddragon' | 'opgg' | 'lcu'
 
@@ -89,6 +90,36 @@ export interface AppInfo {
   disclaimer: string
 }
 
+/* ------------------------- builds: busca e envio ao cliente ------------------------- */
+
+export type ApplyWhat = 'items' | 'runes' | 'spells'
+
+/** O que enviar ao cliente do jogo para uma build escolhida. Só ids; o cliente resolve nomes e ícones. */
+export interface ApplyBuildRequest {
+  champion: number
+  championName: string
+  buildTitle: string
+  items: { id: number; role: 'inicial' | 'botas' | 'principal' | 'situacional' }[]
+  runes: { primaryStyle: number; primaryRunes: number[]; secondaryStyle: number; secondaryRunes: number[]; shards: number[] } | null
+  /** [feitiço 1, feitiço 2], na ordem em que devem ficar no cliente. */
+  spells: number[] | null
+  options: Record<ApplyWhat, boolean>
+}
+
+export interface ApplyStep {
+  what: ApplyWhat
+  status: 'ok' | 'skipped' | 'failed'
+  /** Texto para o usuário, em linguagem simples. */
+  message: string
+}
+
+export interface ApplyResult {
+  /** true se nenhuma etapa falhou (etapas puladas por escolha ou por fase do jogo não contam como falha). */
+  ok: boolean
+  steps: ApplyStep[]
+  at: number
+}
+
 export interface LeagueSenseApi {
   app: {
     info(): Promise<AppInfo>
@@ -112,6 +143,10 @@ export interface LeagueSenseApi {
     /** Descarta o cache e busca de novo. */
     refresh(): Promise<void>
   }
+  builds: {
+    /** Reúne dados de build/confronto (OP.GG + Data Dragon). Falhas parciais vêm em `problems`. */
+    request(req: BuildRequestPayload, mode: 'live' | 'demo'): Promise<BuildBundle>
+  }
   lcu: {
     status(): Promise<LcuStatus>
     onStatus(cb: (s: LcuStatus) => void): () => void
@@ -121,9 +156,21 @@ export interface LeagueSenseApi {
     onPlayer(cb: (p: PlayerData) => void): () => void
     /** Posição atribuída pelo cliente ao jogador local, se houver. */
     reconnect(): Promise<void>
+    /** Envia a build ao cliente: conjunto de itens, página de runas e (opcional) feitiços. Só mexe no que é do LeagueSense. */
+    applyBuild(req: ApplyBuildRequest): Promise<ApplyResult>
+    /** Remove do cliente apenas os conjuntos de itens e a página de runas criados pelo LeagueSense. */
+    clearBuilds(): Promise<ApplyResult>
   }
 }
 
+export interface BuildRequestPayload {
+  champion: number
+  position: Position
+  elo: EloTier
+  opponent: number | null
+}
+
+export type { BuildBundle }
 export type { ChampionInfo, Draft, EloTier, PlayerData, Preferences, Position, StatsSnapshot, FetchPlan }
 
 declare global {

@@ -1,5 +1,6 @@
 import { CONFIG } from './config'
 import { evaluateComposition, type TeamMember } from './composition'
+import { explainTop } from './explain-rank'
 import { hoveredByAllies, unavailableChampions } from './draft'
 import { fmtInt, fmtPct, fmtSignedPp, ELO_LABEL } from './format'
 import { inferPositions, type PositionDistribution, type PositionInput } from './positions'
@@ -60,6 +61,7 @@ export function recommend(input: EngineInput): RecommendationResult {
     status,
     items: [],
     ranking: [],
+    rankExplanation: null,
     considered: 0,
     excludedCount: 0,
     warnings,
@@ -389,6 +391,7 @@ export function recommend(input: EngineInput): RecommendationResult {
     status,
     items,
     ranking: ranked.map((r) => r.championId),
+    rankExplanation: explainTop(items, (id) => nameOf(roster, id)),
     considered: candidates.length,
     excludedCount,
     warnings,

@@ -3,6 +3,7 @@ import { DslParseError, parseDsl } from '../src/main/sources/opgg/dsl'
 import { OpggProvider, normalizeName, opggParam } from '../src/main/sources/opgg/provider'
 import { SourceFailure } from '../src/main/errors'
 import type { McpLike } from '../src/main/sources/opgg/mcp'
+import { ANALYSIS_BUILD, GUIDE_REAL } from './fixtures/opgg-builds'
 import { ANALYSIS_BASE, CHAMPION_LIST, LANE_META, MATCHUP_JSON, PATCH_PROBE, SYNERGIES } from './fixtures/opgg'
 
 describe('parseDsl', () => {
@@ -138,5 +139,68 @@ describe('OpggProvider', () => {
 
   it('campeão desconhecido do OP.GG falha com mensagem clara', async () => {
     await expect(mk().matchups(99999, 'mid')).rejects.toMatchObject({ kind: 'validation' })
+  })
+})
+
+describe('OpggProvider: builds', () => {
+  const mk = (over: Record<string, string | Error> = {}) =>
+    new OpggProvider(
+      new FakeMcp({
+        lol_list_champions: CHAMPION_LIST,
+        lol_get_champion_analysis: ANALYSIS_BUILD,
+        lol_get_lane_matchup_guide: GUIDE_REAL,
+        ...over
+      })
+    )
+
+  it('buildGeneral: lê itens, botas, iniciais, runas, habilidades e patch de uma resposta real', async () => {
+    const g = await mk().buildGeneral(103, 'mid', 'EMERALD_PLUS')
+    expect(g.damageType).toBe('AP')
+    expect(g.core?.ids).toEqual([3118, 4645, 3157])
+    expect(g.boots?.ids).toEqual([3020])
+    expect(g.starter?.ids).toEqual([1056, 2003, 2003])
+    expect(g.slot4.length).toBeGreaterThan(0)
+    expect(g.slot4[0]!.ids).toEqual([3089])
+    expect(g.spells?.ids).toEqual([4, 14])
+    expect(g.runes?.primaryRunes.length).toBe(4)
+    expect(g.runes?.secondaryRunes.length).toBe(2)
+    expect(g.runes?.shards.length).toBe(3)
+    expect(g.skills?.order.length).toBeGreaterThanOrEqual(9)
+    expect(g.patch).toBeNull() // a captura real não pediu trends: sem patch, sem inventar
+  })
+
+  it('buildGeneral: patch vem de trends.win quando presente', async () => {
+    const g = await mk({ lol_get_champion_analysis: ANALYSIS_BASE }).buildGeneral(103, 'mid', 'EMERALD_PLUS')
+    expect(g.patch).toBe('16.21')
+  })
+
+  it('buildGeneral: envia elo e campos pedidos', async () => {
+    const mcp = new FakeMcp({ lol_list_champions: CHAMPION_LIST, lol_get_champion_analysis: ANALYSIS_BUILD })
+    await new OpggProvider(mcp).buildGeneral(103, 'mid', 'DIAMOND_PLUS')
+    const call = mcp.calls.find((c) => c.name === 'lol_get_champion_analysis')!
+    expect(call.args).toMatchObject({ champion: 'AHRI', position: 'mid', tier: 'DIAMOND_PLUS' })
+    expect(JSON.stringify(call.args['desired_output_fields'])).toContain('core_items')
+  })
+
+  it('matchupGuide: mapeia vantagens para "eu"/"oponente", registro do confronto e dica em inglês', async () => {
+    const m = await mk().matchupGuide(103, 238, 'mid')
+    expect(m.opponent).toBe(238)
+    expect(m.cores.length).toBeGreaterThan(0)
+    expect(m.cores[0]!.ids.length).toBe(3)
+    expect(m.singles[0]!.length).toBeGreaterThan(0)
+    expect(m.record).not.toBeNull()
+    expect(m.record!.play).toBeGreaterThan(0)
+    expect(m.laneAdvantage).toBe('opponent') // "Zed" na resposta real
+    expect(m.tipEn).toMatch(/Zed/)
+    expect(['aggressive', 'defensive', 'even']).toContain(m.playStyle)
+    expect(m.gameLengths.length).toBeGreaterThan(0)
+  })
+
+  it('matchupGuide: resposta que não é JSON vira falha explícita', async () => {
+    await expect(mk({ lol_get_lane_matchup_guide: 'não é json' }).matchupGuide(103, 238, 'mid')).rejects.toMatchObject({ kind: 'parse' })
+  })
+
+  it('buildGeneral: formato inesperado vira validation', async () => {
+    await expect(mk({ lol_get_champion_analysis: 'class A: x\n\nA(1)' }).buildGeneral(103, 'mid', 'EMERALD_PLUS')).rejects.toBeInstanceOf(SourceFailure)
   })
 })

@@ -15,6 +15,8 @@ export interface ChampionTraits {
   disengage: number
   /** Ameaça de mergulho (assassinos/mergulhadores). */
   dive: number
+  /** Cura/sustentação relevante (alvo de itens de Ferimento Grave). Curadoria manual. */
+  sustain: number
   /** Precisa de proteção para escalar (atiradores etc.). */
   hypercarry: boolean
   /** Posições típicas — usadas só como alternativa quando não há estatísticas. */
@@ -93,6 +95,7 @@ export function deriveTraits(src: TraitSource): ChampionTraits {
     peel: clamp01(peel),
     disengage: clamp01(disengage),
     dive: clamp01(dive),
+    sustain: 0,
     hypercarry: has(roles, 'MARKSMAN') && !(positions.length === 1 && positions[0] === 'support'),
     positions,
     source: 'derived'
@@ -120,6 +123,7 @@ export function fallbackTraits(tags: string[]): ChampionTraits {
     peel: support && !tank ? 0.5 : 0,
     disengage: 0,
     dive: t.has('Assassin') ? 0.8 : 0,
+    sustain: 0,
     hypercarry: marksman,
     positions: [],
     source: 'fallback'
@@ -127,5 +131,6 @@ export function fallbackTraits(tags: string[]): ChampionTraits {
 }
 
 export function traitsFor(table: TraitsTable, id: number, tags: string[] | undefined): ChampionTraits {
-  return table[id] ?? fallbackTraits(tags ?? [])
+  const t = table[id]
+  return t ? { ...t, sustain: t.sustain ?? 0 } : fallbackTraits(tags ?? [])
 }

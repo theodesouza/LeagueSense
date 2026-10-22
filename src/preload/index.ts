@@ -27,6 +27,7 @@ const api: LeagueSenseApi = {
     status: () => ipcRenderer.invoke(CH.statsStatus),
     refresh: () => ipcRenderer.invoke(CH.statsRefresh)
   },
+  builds: { request: (req, mode) => ipcRenderer.invoke(CH.buildsRequest, req, mode) },
   lcu: {
     status: () => ipcRenderer.invoke(CH.lcuStatus),
     onStatus: (cb) => on(CH.lcuStatusEvent, cb),
@@ -34,7 +35,9 @@ const api: LeagueSenseApi = {
     currentDraft: () => ipcRenderer.invoke(CH.lcuDraft),
     player: () => ipcRenderer.invoke(CH.lcuPlayer),
     onPlayer: (cb) => on(CH.lcuPlayerEvent, cb),
-    reconnect: () => ipcRenderer.invoke(CH.lcuReconnect)
+    reconnect: () => ipcRenderer.invoke(CH.lcuReconnect),
+    applyBuild: (req) => ipcRenderer.invoke(CH.lcuApplyBuild, req),
+    clearBuilds: () => ipcRenderer.invoke(CH.lcuClearBuilds)
   }
 }
 

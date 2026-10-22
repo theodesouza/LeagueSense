@@ -1,3 +1,4 @@
+import type { GeneralBuildData, MatchupGuideData } from '@core/build-types'
 import type { BaseStat, EloTier, Position, PositionRecord } from '@core/types'
 
 export interface LaneMeta {
@@ -21,6 +22,10 @@ export interface StatsProvider {
   matchups(champion: number, position: Position): Promise<TableEntries>
   /** Sinergias do campeão com aliados de outra rota (agregado padrão; só os melhores parceiros). */
   synergies(champion: number, mine: Position, ally: Position): Promise<TableEntries>
+  /** Builds gerais do campeão (itens, botas, runas, feitiços, habilidades) no elo escolhido. */
+  buildGeneral(champion: number, position: Position, tier: EloTier): Promise<GeneralBuildData>
+  /** Guia do confronto: builds específicas contra o oponente + indicações de estilo. */
+  matchupGuide(champion: number, opponent: number, position: Position): Promise<MatchupGuideData>
   /** Patch dos dados, quando o provedor informa. */
   patch(reference: { champion: number; position: Position }): Promise<string | null>
 }

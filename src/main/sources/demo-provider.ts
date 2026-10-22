@@ -1,23 +1,11 @@
 import { POSITIONS, type BaseStat, type ChampionInfo, type EloTier, type Position, type PositionRecord } from '@core/types'
-import type { TraitsTable } from '@core/traits'
+import type { Catalog, GeneralBuildData, MatchupGuideData } from '@core/build-types'
+import { demoGeneral, demoGuide } from '@core/demo-builds'
+import { seededRng } from '@core/rng'
+import { traitsFor, type TraitsTable } from '@core/traits'
 import type { LaneMeta, StatsProvider, TableEntries } from './provider'
 
-/** PRNG determinístico (mulberry32) semeado por texto. */
-function rng(seed: string): () => number {
-  let h = 1779033703 ^ seed.length
-  for (let i = 0; i < seed.length; i++) {
-    h = Math.imul(h ^ seed.charCodeAt(i), 3432918353)
-    h = (h << 13) | (h >>> 19)
-  }
-  let a = h >>> 0
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0
-    let t = a
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
+const rng = seededRng
 
 const TIER_SHIFT: Partial<Record<EloTier, number>> = { IRON: -0.006, BRONZE: -0.004, SILVER: -0.002, GOLD: 0, PLATINUM: 0.001, DIAMOND: 0.002, MASTER: 0.003 }
 
@@ -31,12 +19,13 @@ export class DemoProvider implements StatsProvider {
 
   constructor(
     private readonly roster: ChampionInfo[],
-    traits: TraitsTable,
+    private readonly traitsTable: TraitsTable,
     private readonly patchLabel: string,
-    private readonly latencyMs = 0
+    private readonly latencyMs = 0,
+    private readonly catalog: Catalog | null = null
   ) {
     for (const c of roster) {
-      const t = traits[c.id]?.positions
+      const t = traitsTable[c.id]?.positions
       this.positionsOf.set(c.id, t && t.length > 0 ? t : this.guessPositions(c))
     }
   }
@@ -119,6 +108,22 @@ export class DemoProvider implements StatsProvider {
       entries[p.id] = { play: p.play, win: Math.round(p.play * wr) }
     }
     return { entries, patch: null }
+  }
+
+  private traitsOf(id: number): ReturnType<typeof traitsFor> {
+    return traitsFor(this.traitsTable, id, this.roster.find((c) => c.id === id)?.tags)
+  }
+
+  async buildGeneral(champion: number, _position: Position, _tier: EloTier): Promise<GeneralBuildData> {
+    await this.wait()
+    if (!this.catalog) throw new Error('catálogo indisponível')
+    return demoGeneral(champion, this.traitsOf(champion), this.catalog, this.patchLabel)
+  }
+
+  async matchupGuide(champion: number, opponent: number, position: Position): Promise<MatchupGuideData> {
+    await this.wait()
+    if (!this.catalog) throw new Error('catálogo indisponível')
+    return demoGuide(champion, opponent, position, this.traitsOf(champion), this.catalog, this.patchLabel)
   }
 
   async patch(): Promise<string | null> {

@@ -36,6 +36,7 @@ export const neutralTraits = (over: Partial<ChampionTraits> = {}): ChampionTrait
   peel: 0,
   disengage: 0,
   dive: 0,
+  sustain: 0,
   hypercarry: false,
   positions: ['mid'],
   source: 'derived',

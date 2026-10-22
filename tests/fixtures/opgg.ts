@@ -6,7 +6,7 @@ export const CHAMPION_LIST = `class LolListChampions: data
 class Data: champions
 class Champion: champion_id,key,name
 
-LolListChampions(Data([Champion(103,"Ahri","Ahri"),Champion(157,"Yasuo","Yasuo"),Champion(412,"Thresh","Thresh"),Champion(62,"MonkeyKing","Wukong"),Champion(145,"Kaisa","Kai'Sa"),Champion(60001,"Jade_Annie","Annie"),Champion(20,"Nunu","Nunu & Willump")]))`
+LolListChampions(Data([Champion(103,"Ahri","Ahri"),Champion(157,"Yasuo","Yasuo"),Champion(412,"Thresh","Thresh"),Champion(62,"MonkeyKing","Wukong"),Champion(145,"Kaisa","Kai'Sa"),Champion(60001,"Jade_Annie","Annie"),Champion(20,"Nunu","Nunu & Willump"),Champion(238,"Zed","Zed")]))`
 
 export const LANE_META = `class LolListLaneMetaChampions: data
 class Data: positions

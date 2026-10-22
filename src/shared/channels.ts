@@ -17,10 +17,13 @@ export const CH = {
   lcuDraftEvent: 'lcu:draft-event',
   lcuPlayer: 'lcu:player',
   lcuPlayerEvent: 'lcu:player-event',
-  lcuReconnect: 'lcu:reconnect'
+  lcuReconnect: 'lcu:reconnect',
+  buildsRequest: 'builds:request',
+  lcuApplyBuild: 'lcu:apply-build',
+  lcuClearBuilds: 'lcu:clear-builds'
 } as const
 
-/** Esquema do protocolo de imagens: leaguesense-img://champion/{tipo}/{chave}/{versão} */
+/** Esquema do protocolo de imagens: leaguesense-img://champion/{tipo}/{chave}/{versão}, ://item|spell/{chave}/{versão} e ://rune/{caminho-base64url}/{versão} */
 export const IMG_SCHEME = 'leaguesense-img'
 
 export const statsContextKey = (source: 'opgg-mcp' | 'demo', position: string, elo: string): string => `${source}:${position}:${elo}`

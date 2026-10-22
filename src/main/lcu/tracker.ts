@@ -1,5 +1,6 @@
 import type { Draft, PlayerData } from '@core/types'
-import type { DraftUpdate, GameflowPhase, LcuStatus } from '@shared/api'
+import type { ApplyBuildRequest, ApplyResult, DraftUpdate, GameflowPhase, LcuStatus } from '@shared/api'
+import { applyBuild, clearOwned } from './build-writer'
 import type { LcuCredentials } from './credentials'
 import type { LcuHttpLike } from './http'
 import { normalizeSession } from './normalize'
@@ -78,6 +79,28 @@ export class LcuTracker {
   }
   getPlayer(): PlayerData {
     return this.player
+  }
+
+  /** Envia a build ao cliente (itens/runas/feitiços do LeagueSense). */
+  applyBuild(req: ApplyBuildRequest): Promise<ApplyResult> {
+    const http = this.connectedHttp()
+    if (!http) return Promise.resolve(this.notConnected(req.options.items ? 'items' : req.options.runes ? 'runes' : 'spells'))
+    return applyBuild(http, req, this.status.phase, { now: this.now })
+  }
+
+  /** Remove do cliente só o que o LeagueSense criou. */
+  clearBuilds(): Promise<ApplyResult> {
+    const http = this.connectedHttp()
+    if (!http) return Promise.resolve(this.notConnected('items'))
+    return clearOwned(http, { now: this.now })
+  }
+
+  private connectedHttp(): LcuHttpLike | null {
+    return this.status.state === 'connected' ? this.http : null
+  }
+
+  private notConnected(what: 'items' | 'runes' | 'spells'): ApplyResult {
+    return { ok: false, at: this.now(), steps: [{ what, status: 'failed', message: 'O cliente do League of Legends não está conectado. Abra o cliente e tente de novo.' }] }
   }
 
   start(): void {
