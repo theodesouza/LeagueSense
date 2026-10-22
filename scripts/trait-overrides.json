@@ -1,0 +1,34 @@
+{
+  "_comment": "Curadoria manual (julgamento do autor, NÃO dados da Riot). Valores 0–1. Só corrige onde a derivação por funções/atributos erra de forma conhecida. Revise à vontade; campeões ausentes usam a derivação.",
+  "engage": {
+    "Leona": 1, "Nautilus": 1, "Alistar": 1, "Rakan": 1, "Amumu": 1, "Malphite": 1, "Sejuani": 1, "Zac": 1,
+    "Rell": 1, "JarvanIV": 1, "XinZhao": 0.8, "Ornn": 0.8, "Vi": 0.8, "Hecarim": 0.8, "MonkeyKing": 0.8,
+    "Maokai": 0.8, "Skarner": 0.8, "Blitzcrank": 0.8, "Fiddlesticks": 0.8, "Galio": 0.8, "Volibear": 0.8,
+    "Rammus": 0.8, "Gragas": 0.7, "Sion": 0.7, "Nunu": 0.7, "Thresh": 0.7, "Pyke": 0.7, "Kennen": 0.7,
+    "Poppy": 0.7, "Nocturne": 0.7, "Briar": 0.7, "Camille": 0.6, "Diana": 0.6, "Irelia": 0.6, "Warwick": 0.6,
+    "Lissandra": 0.6, "Sett": 0.6, "Neeko": 0.6, "LeeSin": 0.6, "Braum": 0.6, "Taric": 0.5, "TahmKench": 0.5,
+    "Renata": 0.5, "Qiyana": 0.5, "Ekko": 0.5, "Yone": 0.5, "Elise": 0.5, "Olaf": 0.5, "Trundle": 0.5,
+    "BelVeth": 0.5, "Ashe": 0.4, "Bard": 0.4, "Annie": 0.4, "Chogath": 0.4, "Shyvana": 0.4, "Udyr": 0.4
+  },
+  "peel": {
+    "Lulu": 1, "Janna": 1, "Yuumi": 1, "Braum": 1, "Milio": 1, "Taric": 0.9, "Nami": 0.9, "Renata": 0.9,
+    "Soraka": 0.8, "Karma": 0.8, "Poppy": 0.8, "Thresh": 0.8, "Ivern": 0.8, "Sona": 0.7, "Shen": 0.7,
+    "Alistar": 0.7, "Rakan": 0.7, "Morgana": 0.7, "Zilean": 0.7, "Seraphine": 0.6, "Bard": 0.6,
+    "Galio": 0.6, "TahmKench": 0.6, "Kayle": 0.5, "Senna": 0.5, "Lux": 0.4, "Nautilus": 0.4, "Leona": 0.4
+  },
+  "disengage": {
+    "Janna": 1, "Poppy": 1, "Braum": 0.8, "Lulu": 0.8, "Alistar": 0.7, "Gragas": 0.6, "Thresh": 0.6,
+    "Lissandra": 0.6, "Anivia": 0.6, "Nami": 0.5, "Zilean": 0.5, "Ornn": 0.5, "Sejuani": 0.5, "Morgana": 0.5,
+    "Ashe": 0.5, "Vex": 0.5, "TahmKench": 0.5, "Taliyah": 0.5, "Shen": 0.5, "Maokai": 0.5, "Karma": 0.5,
+    "Bard": 0.4, "Cassiopeia": 0.4, "Neeko": 0.4, "Nautilus": 0.4, "Kennen": 0.4, "Zyra": 0.4, "Soraka": 0.4,
+    "Orianna": 0.4, "Syndra": 0.4, "Lux": 0.4, "Rell": 0.4, "Renata": 0.4, "Gnar": 0.4, "Rammus": 0.4
+  },
+  "dive": {
+    "Fizz": 0.9, "Kassadin": 0.8, "Briar": 0.9, "Nocturne": 0.9, "BelVeth": 0.8, "MasterYi": 0.8,
+    "Shaco": 0.9, "Tryndamere": 0.7, "Naafiri": 1
+  },
+  "hypercarry": ["Kayle", "MasterYi"],
+  "damageSplit": {
+    "Corki": 0.5, "Ezreal": 0.6, "Kaisa": 0.6, "Kayle": 0.5, "KogMaw": 0.5, "Varus": 0.6, "Shyvana": 0.6
+  }
+}

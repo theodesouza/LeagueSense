@@ -1,0 +1,2986 @@
+{
+ "ddragonVersion": "16.21.1",
+ "generatedAt": "2026-10-22T18:17:09.693Z",
+ "traitsWithoutSource": [
+  "Locke",
+  "Zaahen"
+ ],
+ "traits": {
+  "1": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.4,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "2": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "3": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0.6,
+   "disengage": 0.7,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "4": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "5": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.8,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "6": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0.7,
+   "engage": 0.2,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "7": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "8": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "9": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "10": {
+   "ad": 0.5,
+   "ap": 0.5,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0.5,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "11": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": true,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "12": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0.7,
+   "disengage": 0.7,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "13": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "14": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "15": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "16": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.8,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "17": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "jungle",
+    "support",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "18": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "19": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.6,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "20": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "21": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "22": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.4,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "23": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.7,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "24": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "25": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0.7,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "26": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.7,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "27": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "28": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "29": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "30": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "31": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.4,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "32": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "33": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "34": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.6,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "35": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.9,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "36": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.2,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "37": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.7,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "38": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "39": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.6,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "40": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 1,
+   "disengage": 1,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "41": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "42": {
+   "ad": 0.5,
+   "ap": 0.5,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "43": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.8,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "44": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0.9,
+   "disengage": 0.7,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "45": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "48": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.5,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "50": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "adc",
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "51": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "53": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 0.5,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "54": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "55": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "56": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.9,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "57": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "58": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "59": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 1,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "60": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "61": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "62": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.8,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "63": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "64": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.6,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "67": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "68": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "69": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "72": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "74": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "75": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.2,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "76": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "77": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.4,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "78": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0.8,
+   "disengage": 1,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "79": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.6,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "80": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid",
+    "support",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "81": {
+   "ad": 0.6,
+   "ap": 0.4,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "curated"
+  },
+  "82": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.6,
+   "engage": 0.2,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "83": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.2,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "84": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "85": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "86": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.2,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "89": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0.4,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "90": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "91": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "92": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "96": {
+   "ad": 0.5,
+   "ap": 0.5,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "curated"
+  },
+  "98": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.7,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "99": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.4,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "101": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "102": {
+   "ad": 0.6,
+   "ap": 0.4,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.6,
+   "engage": 0.4,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "103": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "104": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "105": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.9,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "106": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.8,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "107": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "110": {
+   "ad": 0.6,
+   "ap": 0.4,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "curated"
+  },
+  "111": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0.4,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "112": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "113": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "114": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "115": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "adc",
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "117": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 1,
+   "disengage": 0.8,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "119": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "120": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.8,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "121": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "122": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.2,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "126": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "127": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.6,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.6,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "131": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.6,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "133": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "134": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "136": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "141": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "142": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "143": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "145": {
+   "ad": 0.6,
+   "ap": 0.4,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "curated"
+  },
+  "147": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0.6,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "adc",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "150": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0.7,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "154": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "support",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "157": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "adc",
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "161": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "163": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.7,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "164": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.6,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "support",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "166": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "200": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.6,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "201": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.6,
+   "cc": 1,
+   "peel": 1,
+   "disengage": 0.8,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "202": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "203": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "221": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "222": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "223": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0.6,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "233": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.9,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "234": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "235": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0.5,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "236": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "238": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "240": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.5,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "245": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "246": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "254": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "266": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.2,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "267": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0.9,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "268": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "mid"
+   ],
+   "source": "derived"
+  },
+  "350": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 1,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "360": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "412": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0.5,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0.8,
+   "disengage": 0.6,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "420": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.2,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "421": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.7,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.8,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "427": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0.8,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "curated"
+  },
+  "429": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "432": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.4,
+   "cc": 1,
+   "peel": 0.6,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "497": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0.7,
+   "disengage": 0,
+   "dive": 0.6,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "498": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "516": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0.8,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "517": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "518": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.6,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "curated"
+  },
+  "523": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "526": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 1,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "555": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.7,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "711": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  },
+  "777": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0.5,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "curated"
+  },
+  "799": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0.7,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "800": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "804": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "875": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 0.7,
+   "engage": 0.6,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "curated"
+  },
+  "876": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0.5,
+   "hypercarry": false,
+   "positions": [
+    "jungle"
+   ],
+   "source": "derived"
+  },
+  "887": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0.35,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "jungle",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "888": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.65,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0.5,
+   "cc": 1,
+   "peel": 0.9,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "893": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "895": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "adc"
+   ],
+   "source": "derived"
+  },
+  "897": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 0.65,
+   "ranged": false,
+   "frontline": 1,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0.9,
+   "disengage": 0.7,
+   "dive": 0.5,
+   "hypercarry": false,
+   "positions": [
+    "top"
+   ],
+   "source": "derived"
+  },
+  "901": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 0,
+   "hypercarry": true,
+   "positions": [
+    "adc",
+    "mid",
+    "top"
+   ],
+   "source": "derived"
+  },
+  "902": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 0.25,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0.5,
+   "peel": 1,
+   "disengage": 0.5,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "support"
+   ],
+   "source": "curated"
+  },
+  "910": {
+   "ad": 0,
+   "ap": 1,
+   "damageWeight": 1,
+   "ranged": true,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 1,
+   "peel": 0,
+   "disengage": 0.4,
+   "dive": 0,
+   "hypercarry": false,
+   "positions": [
+    "mid",
+    "support"
+   ],
+   "source": "derived"
+  },
+  "950": {
+   "ad": 1,
+   "ap": 0,
+   "damageWeight": 1,
+   "ranged": false,
+   "frontline": 0,
+   "engage": 0,
+   "cc": 0,
+   "peel": 0,
+   "disengage": 0,
+   "dive": 1,
+   "hypercarry": false,
+   "positions": [
+    "mid"
+   ],
+   "source": "curated"
+  }
+ }
+}

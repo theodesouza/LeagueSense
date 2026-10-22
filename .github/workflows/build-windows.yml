@@ -1,0 +1,30 @@
+name: Build Windows
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      # Gera o instalador NSIS, a versão portátil e o .zip (o exe recebe ícone e metadados no Windows).
+      - run: npm run dist:win
+        env:
+          # sem certificado de assinatura: o Windows SmartScreen mostrará "editor desconhecido"
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LeagueSense-windows
+          path: |
+            release/*.exe
+            release/*.zip

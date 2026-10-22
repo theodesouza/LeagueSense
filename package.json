@@ -1,0 +1,52 @@
+{
+  "name": "leaguesense",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Assistente de draft de League of Legends com recomendações explicáveis",
+  "author": "LeagueSense",
+  "license": "UNLICENSED",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build:data": "tsx scripts/build-data.ts",
+    "check:data": "tsx scripts/check-live-data.ts",
+    "check:contrast": "tsx scripts/check-contrast.ts",
+    "dev:web": "vite --config vite.preview.config.ts",
+    "verify:visual": "tsx scripts/verify-visual.ts",
+    "dist:win": "npm run build && electron-builder --win nsis portable zip --x64 --config electron-builder.yml",
+    "dist:win:linux": "npm run build && electron-builder --win zip --x64 --config electron-builder.yml -c.win.signAndEditExecutable=false",
+    "verify:package": "tsx scripts/verify-package.ts",
+    "verify:a11y": "tsx scripts/verify-a11y.ts"
+  },
+  "dependencies": {
+    "ws": "^8.22.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/sora": "^5.3.0",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/ws": "^8.18.2",
+    "@vitejs/plugin-react": "^6.1.2",
+    "electron": "^45.0.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^6.0.0",
+    "lucide-react": "^1.61.0",
+    "motion": "^14.6.0",
+    "playwright": "^1.64.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}

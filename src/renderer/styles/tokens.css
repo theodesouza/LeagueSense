@@ -1,0 +1,97 @@
+/* Tokens de design do LeagueSense — ver docs/DIRECAO-VISUAL.md */
+:root {
+  color-scheme: dark;
+
+  /* Superfícies em camadas (grafite) */
+  --bg-0: #0d0f13;
+  --bg-1: #13161b;
+  --bg-2: #191d23;
+  --bg-3: #20252c;
+  --bg-4: #272d36;
+  --line-1: #242932;
+  --line-2: #323945;
+  --line-3: #6b7688; /* bordas de controles interativos (≥ 3:1) */
+
+  /* Texto */
+  --text-1: #e9ecf1;
+  --text-2: #aeb6c2;
+  --text-3: #8a93a1;
+
+  /* Destaque único */
+  --accent: #5cc8b4;
+  --accent-strong: #7ed9c7;
+  --accent-dim: rgba(92, 200, 180, 0.13);
+  --accent-line: rgba(92, 200, 180, 0.42);
+  --on-accent: #08201b;
+
+  /* Times e estados */
+  --enemy: #c98a8a;
+  --enemy-dim: rgba(201, 138, 138, 0.13);
+  --enemy-line: rgba(201, 138, 138, 0.4);
+  --warn: #e2b15c;
+  --warn-dim: rgba(226, 177, 92, 0.13);
+  --warn-line: rgba(226, 177, 92, 0.38);
+  --danger: #f0645c;
+  --danger-dim: rgba(240, 100, 92, 0.13);
+  --danger-line: rgba(240, 100, 92, 0.4);
+
+  /* Tipografia */
+  --font-ui: 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Sora Variable', 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --fs-28: 28px;
+
+  /* Espaçamento (grade de 4 px) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-12: 48px;
+
+  /* Raios e elevação */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-pill: 999px;
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 4px 16px rgba(0, 0, 0, 0.28);
+  --shadow-2: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+  /* Movimento */
+  --dur-micro: 140ms;
+  --dur-content: 220ms;
+  --dur-reorder: 260ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Janela */
+  --topbar-h: 40px;
+  --titlebar-right: 16px;
+}
+
+html[data-platform='win32'] {
+  /* controles nativos de janela (min/max/fechar) ficam à direita da barra */
+  --titlebar-right: max(16px, calc(100vw - env(titlebar-area-width, 100vw) - env(titlebar-area-x, 0px) + 8px));
+}
+
+/* Movimento reduzido: preferência do sistema OU escolha do app */
+@media (prefers-reduced-motion: reduce) {
+  html[data-motion='system'] {
+    --dur-micro: 0.01ms;
+    --dur-content: 0.01ms;
+    --dur-reorder: 0.01ms;
+  }
+}
+html[data-motion='reduced'] {
+  --dur-micro: 0.01ms;
+  --dur-content: 0.01ms;
+  --dur-reorder: 0.01ms;
+}
