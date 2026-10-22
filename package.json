@@ -18,8 +18,8 @@
     "check:contrast": "tsx scripts/check-contrast.ts",
     "dev:web": "vite --config vite.preview.config.ts",
     "verify:visual": "tsx scripts/verify-visual.ts",
-    "dist:win": "npm run build && electron-builder --win nsis portable zip --x64 --config electron-builder.yml",
-    "dist:win:linux": "npm run build && electron-builder --win zip --x64 --config electron-builder.yml -c.win.signAndEditExecutable=false",
+    "dist:win": "npm run build && electron-builder --win nsis portable zip --x64 --publish never --config electron-builder.yml",
+    "dist:win:linux": "npm run build && electron-builder --win zip --x64 --publish never --config electron-builder.yml -c.win.signAndEditExecutable=false",
     "verify:package": "tsx scripts/verify-package.ts",
     "verify:a11y": "tsx scripts/verify-a11y.ts"
   },
