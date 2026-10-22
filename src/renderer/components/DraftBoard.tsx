@@ -81,9 +81,9 @@ function PickSlot({
         {editable === 'full' && <span className="slot-edit" aria-hidden="true"><Pencil size={12} /></span>}
       </span>
       <span className="slot-meta">
-        <span className="slot-name" data-empty={name == null || undefined}>{name}</span>
+        <span className="slot-name" data-empty={name == null || undefined}>{name}</span>{' '}
         <span className="slot-sub">
-          {slot.isMe ? <b className="me-tag">Você</b> : null}
+          {slot.isMe ? <b className="me-tag">Você</b> : null}{' '}
           <span className="slot-pos" data-source={slot.positionSource}>
             <PositionIcon position={slot.position} size={13} />
             <span data-unknown={slot.position == null || undefined}>{slot.position ? POSITION_LABEL[slot.position] : null}</span>

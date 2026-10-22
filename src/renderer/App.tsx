@@ -3,6 +3,7 @@ import { MotionConfig } from 'motion/react'
 import rosterJson from '@core/data/roster.json'
 import traitsJson from '@core/data/traits.json'
 import { myDeclaredPosition, type SlotRef } from '@core/draft'
+import { resolveFocus } from '@core/focus'
 import type { TraitsTable } from '@core/traits'
 import type { ChampionInfo, Preferences } from '@core/types'
 import { api } from './api'
@@ -10,7 +11,9 @@ import { ControlsBar } from './components/ControlsBar'
 import { DemoBar } from './components/DemoBar'
 import { DraftBoard, type Editable } from './components/DraftBoard'
 import { SlotPopover } from './components/ChampionPicker'
-import { Recommendations } from './components/Recommendations'
+import { PlanView } from './components/PlanView'
+import { Banners, Recommendations } from './components/Recommendations'
+import { ViewTabs } from './components/ViewTabs'
 import { Sheet } from './components/Sheet'
 import { TopBar } from './components/TopBar'
 import { contextKeyFor, selectDraft, selectPosition, useBridge, useRecommendations, useStatsRequest, useStatsSnapshot, useThrottledSnapshot } from './state/hooks'
@@ -62,19 +65,44 @@ export function App(): ReactElement {
   const editable: Editable = state.mode === 'manual' ? 'full' : state.mode === 'auto' && !standby ? 'position' : 'none'
   const loading = !!position && snapshot == null && state.data.state !== 'error'
 
+  const nameOf = useCallback((id: number) => champions.get(id)?.name ?? `Campeão ${id}`, [champions])
+  const top = result.items[0]?.championId ?? null
+  const focus = useMemo(() => resolveFocus({ draft, myPick: state.myPick, top, nameOf }), [draft, state.myPick, top, nameOf])
+  const planAvailable = !!position && !standby
+  const view = planAvailable ? state.view : 'recs'
+
   const ctx: Ctx = useMemo(() => ({ state, dispatch, champions, version, setPrefs }), [state, champions, version, setPrefs])
   const motion = state.prefs.motion === 'reduced' ? 'always' : state.prefs.motion === 'full' ? 'never' : 'user'
 
   return (
     <AppContext.Provider value={ctx}>
       <MotionConfig reducedMotion={motion}>
-        <div className="app" data-mode={state.mode}>
+        <div className="app" data-mode={state.mode} data-view={view}>
           <TopBar result={result} />
           <main className="main">
             <DraftBoard draft={draft} editable={editable} onOpen={openSlot} activeRef={state.picker} />
             {state.mode === 'demo' && <DemoBar />}
             <ControlsBar position={position} assigned={assigned} />
-            <Recommendations result={result} position={position} traits={traits} standby={standby} loading={loading} />
+            <ViewTabs focus={focus} draft={draft} traits={traits} planAvailable={planAvailable} />
+            {view === 'plan' && position ? (
+              <section className="recs view-fade" aria-label="Plano de jogo">
+                <Banners result={result} mode={state.mode} />
+                <div className="recs-scroll">
+                  {focus ? (
+                    <PlanView focus={focus} result={result} position={position} traits={traits} draft={draft} />
+                  ) : (
+                    <div className="state-card" id="view-panel-plan" role="tabpanel" aria-labelledby="view-tab-plan">
+                      <div>
+                        <h3>Escolha o seu campeão</h3>
+                        <div className="state-body"><p>Ainda não há recomendação nem escolha. Use “Escolher campeão” para ver o plano de jogo de qualquer campeão.</p></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            ) : (
+              <Recommendations result={result} position={position} traits={traits} standby={standby} loading={loading} focus={focus} />
+            )}
           </main>
           <Sheet />
           {state.picker && anchor && <SlotPopover slotRef={state.picker} anchor={anchor} draft={draft} editable={editable} traits={traits} onClose={closeSlot} />}

@@ -55,3 +55,15 @@ arte do campeão (texto nunca fica diretamente sobre o retrato).
 ## Contraste (calculado, WCAG 2.1)
 
 Verificado por `scripts/check-contrast.ts`; os pares usados para texto precisam de ≥ 4,5:1 (ver resultado no README).
+
+## Plano de jogo (aba nova)
+
+Mesmos tokens e **um só destaque** (verde-água): aba ativa, veredito favorável, objetivo da build, "Em uso" e botão
+principal. Contraste e foco como no resto do app (axe: 0 violações). Decisões de layout:
+
+* as abas "Recomendações | Plano de jogo" ficam presas ao topo e, no plano, **a página inteira rola** (o quadro do draft
+  sai de cena) — o conteúdo é longo e o conteúdo útil não pode ficar numa faixa pequena em 960×620;
+* três cartões de build (escolha tipo *radio*) mostram o núcleo de cada uma; o painel abaixo detalha a escolhida;
+* cada linha da dica de confronto leva uma etiqueta de origem (dado / regra / oficial / terceiros) — o usuário vê o que é
+  estatística e o que é regra;
+* o resultado do envio ao cliente é uma lista por etapa (ok / pulada / falhou) em região `aria-live`.

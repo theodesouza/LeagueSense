@@ -220,6 +220,40 @@ class Harness {
 const session = (counter: number, champ0 = 0, gameId = 7001) =>
   makeSession({ gameId, counter, myTeam: [{ cellId: 0, championId: champ0, position: 'middle' }], theirTeam: [], actions: champ0 ? [{ actorCellId: 0, championId: champ0, completed: true, type: 'pick', isAllyAction: true }] : [] })
 
+describe('LcuTracker: envio de build', () => {
+  const req = {
+    champion: 103,
+    championName: 'Ahri',
+    buildTitle: 'Meta geral',
+    items: [{ id: 3089, role: 'principal' as const }],
+    runes: null,
+    spells: null,
+    options: { items: true, runes: false, spells: false }
+  }
+
+  it('sem conexão: falha explicada e nenhuma escrita', async () => {
+    const h = new Harness()
+    const r = await h.tracker.applyBuild(req)
+    expect(r.ok).toBe(false)
+    expect(r.steps[0]!.message).toMatch(/não está conectado/)
+    const c = await h.tracker.clearBuilds()
+    expect(c.ok).toBe(false)
+  })
+
+  it('conectado: usa o HTTP do cliente e informa a fase para decidir sobre feitiços', async () => {
+    const h = new Harness()
+    h.creds = { port: 1, password: 'p', scheme: 'https', source: 'lockfile' }
+    h.responses.set('/lol-gameflow/v1/gameflow-phase', 'Lobby')
+    h.responses.set('/lol-summoner/v1/current-summoner', { summonerId: 9, accountId: 8 })
+    h.responses.set('/lol-item-sets/v1/item-sets/9/sets', { timestamp: 1, accountId: 8, itemSets: [] })
+    h.tracker.start()
+    await h.settle()
+    const r = await h.tracker.applyBuild({ ...req, spells: [4, 14], options: { items: false, runes: false, spells: true } })
+    expect(r.ok).toBe(true) // etapa pulada (fora da seleção) não é falha
+    expect(r.steps[0]).toMatchObject({ what: 'spells', status: 'skipped' })
+  })
+})
+
 describe('LcuTracker', () => {
   it('sem cliente: "procurando"; ao achar: conecta, lê a fase e assina eventos', async () => {
     const h = new Harness()

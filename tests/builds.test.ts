@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { planGame } from '@core/builds'
+import { archetypeOf, planGame } from '@core/builds'
 import { explainTop } from '@core/explain-rank'
 import { matchupAdvice } from '@core/matchup-advice'
 import type { TeamMember } from '@core/composition'
@@ -122,6 +122,13 @@ describe('planGame — builds', () => {
     expect(p.builds[1]!.caveats.join(' ')).toMatch(/específicos do confronto/)
   })
 
+  it('item raro de "bola de neve" (taxa de vitória enorme, pouca escolha) não passa na frente dos populares', () => {
+    const p = plan()
+    const slots = idsOf(p.builds[0]!, 'situacional')
+    expect(slots[0]).toBe(3089) // Rabadon: o mais escolhido
+    expect(slots.indexOf(3041)).toBeGreaterThan(slots.indexOf(3089)) // Mejai (79 % em 471 partidas) fica atrás ou fora
+  })
+
   it('inimigos com muito dano físico levam itens de armadura e o motivo cita o fato usado', () => {
     const phys = (n: string) => member(n, { ad: 1, ap: 0, damageWeight: 1 })
     const p = plan({ enemies: [phys('Beta'), phys('Gama'), phys('Delta'), phys('Eco')] })
@@ -215,6 +222,21 @@ describe('planGame — objetivo e comportamento', () => {
     const p = plan()
     expect(p.builds[1]!.objective).toMatch(/Beta/)
     expect(p.builds[2]!.objective).toMatch(/ajustada à composição/)
+  })
+})
+
+describe('arquétipo', () => {
+  const tf = neutralTraits({ ad: 0, ap: 1, damageWeight: 1, ranged: true, hypercarry: true, cc: 0.5 })
+  it('a função principal do Data Dragon manda; hypercarry de dano mágico é mago, não atirador', () => {
+    expect(archetypeOf(tf, ['Mage', 'Marksman'])).toBe('mago')
+    expect(archetypeOf(tf)).toBe('mago') // sem tags: atirador exige dano físico
+    expect(archetypeOf(neutralTraits({ ad: 1, ap: 0, damageWeight: 1, ranged: true, hypercarry: true }))).toBe('atirador')
+    expect(archetypeOf(neutralTraits({ ad: 1, damageWeight: 1, ranged: false, dive: 1 }), ['Fighter', 'Assassin'])).toBe('lutador')
+    expect(archetypeOf(neutralTraits({ ad: 1, damageWeight: 1, ranged: false, dive: 1 }), ['Assassin'])).toBe('assassino')
+    expect(archetypeOf(neutralTraits(), ['Support', 'Tank'])).toBe('suporte')
+  })
+  it('tag desconhecida cai para os traços', () => {
+    expect(archetypeOf(neutralTraits({ ad: 0, ap: 1, ranged: true }), ['Outra'])).toBe('mago')
   })
 })
 

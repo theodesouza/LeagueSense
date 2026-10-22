@@ -34,8 +34,14 @@ import { POSITION_LABEL, type Position } from './types'
 const K_ITEM = 60
 /** Peso (p.p.) de uma necessidade totalmente atendida por um item. Heurístico, não calibrado. */
 const FIT_PP = 3
-/** Bônus (p.p.) pela taxa de escolha — mantém a build dentro do que é popular. */
-const PICK_PP = 3
+/**
+ * Bônus (p.p.) pela taxa de escolha — mantém a build dentro do que é popular. É maior que o do motor de
+ * campeões porque a taxa de vitória de itens tardios é enviesada: quem já está ganhando compra mais itens
+ * (ex.: itens de "bola de neve"), então a popularidade pesa e a vantagem de vitória é limitada.
+ */
+const PICK_PP = 15
+/** Limite (p.p.) da vantagem de vitória de um item/conjunto na pontuação. */
+const EDGE_CAP = 3
 /** Menor amostra (partidas) para um item entrar como candidato. */
 const MIN_PLAY = 8
 /** Menor amostra para considerar uma build/feitiço/runa "mais vencedora". */
@@ -115,7 +121,7 @@ interface Cand {
 const toCand = (s: ItemSet, from: Cand['from']): Cand => ({ ids: s.ids, names: s.names, play: s.play, win: s.win, pick: s.pick, from })
 
 function util(c: Cand, fit: number, lambda: number): number {
-  return edge(c.win, c.play) + PICK_PP * c.pick + lambda * FIT_PP * fit
+  return Math.max(-EDGE_CAP, Math.min(EDGE_CAP, edge(c.win, c.play))) + PICK_PP * c.pick + lambda * FIT_PP * fit
 }
 
 /* --------------------------- arquétipos e textos --------------------------- */
@@ -123,8 +129,18 @@ function util(c: Cand, fit: number, lambda: number): number {
 export type Archetype = 'mago' | 'atirador' | 'assassino' | 'lutador' | 'tanque' | 'suporte' | 'generico'
 export const ARCHETYPE_LABEL: Record<Archetype, string> = { mago: 'Mago', atirador: 'Atirador', assassino: 'Assassino', lutador: 'Lutador', tanque: 'Tanque', suporte: 'Suporte/Protetor', generico: 'Versátil' }
 
-export function archetypeOf(t: ChampionTraits): Archetype {
-  if (t.hypercarry && t.ranged && t.damageWeight >= 0.9) return 'atirador'
+/** Função principal do Data Dragon (primeira tag) → arquétipo. */
+const TAG_ARCHETYPE: Record<string, Archetype> = { Marksman: 'atirador', Mage: 'mago', Assassin: 'assassino', Fighter: 'lutador', Tank: 'tanque', Support: 'suporte' }
+
+/**
+ * Arquétipo do campeão. A função principal do Data Dragon (primeira tag) manda quando existe; sem ela,
+ * os traços decidem. Atiradores precisam de dano físico: um "hypercarry" de dano mágico (ex.: Twisted Fate)
+ * é mago.
+ */
+export function archetypeOf(t: ChampionTraits, tags?: readonly string[]): Archetype {
+  const byTag = tags?.[0] ? TAG_ARCHETYPE[tags[0]] : undefined
+  if (byTag) return byTag
+  if (t.hypercarry && t.ranged && t.damageWeight >= 0.9 && t.ad >= 0.5) return 'atirador'
   if (t.dive >= 0.8 && t.damageWeight >= 0.65) return 'assassino'
   if (t.frontline >= 0.8 && t.damageWeight <= 0.65) return 'tanque'
   if (t.peel >= 0.7 && t.damageWeight <= 0.65) return 'suporte'
@@ -192,6 +208,8 @@ interface Ctx {
   guide: MatchupGuideData | null
   matchup: MatchupAdvice | null
   opponentName: string | null
+  /** Como citar a origem dos dados ("OP.GG" ou, na demonstração, "demonstração fictícia"). */
+  srcName: string
 }
 
 const itemInfo = (ctx: Ctx, id: number): ItemInfo | undefined => ctx.catalog?.items[id]
@@ -307,7 +325,9 @@ function spellsOf(ctx: Ctx, kind: BuildId): { ids: number[]; names: string[]; sa
   }
   if (!pick) pick = kind === 'confronto' ? (bestBy(ctx.guide?.spells ?? [], 15) ?? opts[0]) : opts[0]
   const s = pick!
-  return { ids: s.ids, names: s.names, sample: sample(s), ...(note ? { note } : {}) }
+  // o OP.GG devolve os próprios ids como "nomes" nas builds gerais: o nome vem do catálogo (ou fica genérico)
+  const nameOfSpell = (id: number, i: number): string => ctx.catalog?.spells[id]?.name ?? (s.names[i] && !/^\d+$/.test(s.names[i]!) ? s.names[i]! : `Feitiço ${id}`)
+  return { ids: s.ids, names: s.ids.map(nameOfSpell), sample: sample(s), ...(note ? { note } : {}) }
 }
 
 function adaptationsOf(items: { why: string[] }[]): string[] {
@@ -348,8 +368,8 @@ function playbook(ctx: Ctx, id: BuildId, arch: Archetype): { objective: string; 
     else if (mu.verdict === 'favoravel') lane.push({ text: `Confronto favorável contra ${ctx.opponentName}: pressione, empurre a onda e force-o a gastar recursos para abrir o mapa para o selva.`, ...(rec ? { because: `taxa de vitória ${rec}` } : {}) })
     else if (mu.verdict === 'equilibrado') lane.push({ text: `Confronto equilibrado contra ${ctx.opponentName}: ganhe pelo posicionamento e pelo tempo de recuo; evite trocas arriscadas sem vantagem.`, ...(rec ? { because: `taxa de vitória ${rec}` } : {}) })
     const style = ctx.guide?.playStyle
-    if (style === 'defensive') lane.push({ text: 'Jogue defensivo na rota e escale: não force o nível 1–3.', because: 'recomendação do OP.GG para este confronto' })
-    if (style === 'aggressive') lane.push({ text: 'Jogue agressivo na rota: o confronto permite pressionar cedo.', because: 'recomendação do OP.GG para este confronto' })
+    if (style === 'defensive') lane.push({ text: 'Jogue defensivo na rota e escale: não force o nível 1–3.', because: `recomendação ${ctx.srcName} para este confronto` })
+    if (style === 'aggressive') lane.push({ text: 'Jogue agressivo na rota: o confronto permite pressionar cedo.', because: `recomendação ${ctx.srcName} para este confronto` })
   }
 
   // objetivo: cláusulas adaptativas (no máximo 2, as mais fortes)
@@ -379,8 +399,8 @@ function playbook(ctx: Ctx, id: BuildId, arch: Archetype): { objective: string; 
   // meio de jogo
   const defaults = DEFAULT_BEHAVIOR[arch]
   const lens = ctx.matchup && ctx.guide?.gameLengths.length ? [...ctx.guide.gameLengths].sort((a, b) => b.rate - a.rate)[0] : undefined
-  if (lens && lens.from >= 30) mid.push({ text: 'Neste confronto você rende mais em partidas longas: evite lutas arriscadas antes dos itens principais e escale.', because: 'vitórias por duração (OP.GG, indicativo)' })
-  else if (lens && lens.from === 0) mid.push({ text: 'Neste confronto você rende mais cedo: converta vantagem de rota em objetivos antes dos 25 minutos.', because: 'vitórias por duração (OP.GG, indicativo)' })
+  if (lens && lens.from >= 30) mid.push({ text: 'Neste confronto você rende mais em partidas longas: evite lutas arriscadas antes dos itens principais e escale.', because: `vitórias por duração (dados ${ctx.srcName}, indicativo)` })
+  else if (lens && lens.from === 0) mid.push({ text: 'Neste confronto você rende mais cedo: converta vantagem de rota em objetivos antes dos 25 minutos.', because: `vitórias por duração (dados ${ctx.srcName}, indicativo)` })
   if (id === 'adaptada' && enemy.physical != null) mid.push({ text: `Seus itens defensivos foram escolhidos para o dano inimigo (${fmtPct0(enemy.physical)} físico): use isso para sobreviver a lutas em que o time inimigo foca em você.`, because: 'composição inimiga' })
 
   const group = (phase: string, base: string[], extra: { text: string; because?: string }[]): BehaviorGroup => ({ phase, items: [...base.map((text) => ({ text })), ...extra] })
@@ -397,6 +417,8 @@ export interface PlanInput {
   position: Position
   nameOf: (id: number) => string
   traitsOf: (id: number) => ChampionTraits
+  /** Tags do Data Dragon do campeão (a primeira é a função principal). */
+  tagsOf?: (id: number) => readonly string[] | undefined
   allies: TeamMember[]
   enemies: TeamMember[]
   bundle: BuildBundle
@@ -426,7 +448,8 @@ export function planGame(input: PlanInput): GamePlan {
         oppTraits: input.traitsOf(opp.champion),
         record: bundle.guide?.record ?? input.record ?? null,
         guide: bundle.guide,
-        riotTips: bundle.opponentTips
+        riotTips: bundle.opponentTips,
+        dataSource: bundle.provenance.source === 'demo' ? 'demo' : 'opgg'
       })
     : null
 
@@ -442,9 +465,10 @@ export function planGame(input: PlanInput): GamePlan {
     general: bundle.general,
     guide: bundle.guide,
     matchup,
-    opponentName: opp ? input.nameOf(opp.champion) : null
+    opponentName: opp ? input.nameOf(opp.champion) : null,
+    srcName: bundle.provenance.source === 'demo' ? 'da demonstração fictícia' : 'do OP.GG'
   }
-  const arch = archetypeOf(me)
+  const arch = archetypeOf(me, input.tagsOf?.(champion))
   const g = bundle.general
   const m = bundle.guide
   const builds: PlannedBuild[] = []

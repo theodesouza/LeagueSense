@@ -308,6 +308,138 @@ async function main(): Promise<void> {
     await q.context().close()
   }
 
+  /* ---------- plano de jogo: escolha do campeão, builds, envio ao cliente ---------- */
+  {
+    const p = await fresh(browser)
+    await p.getByRole('radio', { name: 'Demo' }).click()
+    for (let i = 0; i < 6; i++) await p.getByRole('button', { name: 'Próximo passo' }).click()
+    await p.getByRole('radio', { name: /Meio/ }).click()
+    await p.waitForSelector('.hero', { timeout: 15000 })
+    await p.waitForTimeout(1500)
+    check('plano: aba "Plano de jogo" existe e começa em Recomendações', (await p.getByRole('tab', { name: 'Recomendações' }).getAttribute('aria-selected')) === 'true')
+    const why = p.locator('.why-top')
+    check('1º lugar: bloco "Por que está em 1º" com texto explicativo', (await why.count()) === 1 && /1º/.test((await why.innerText()) ?? '') && ((await why.locator('.why-head').innerText()).length > 30))
+    await shot(p, '19-por-que-em-primeiro')
+    await p.getByRole('button', { name: /Escolher e ver plano de jogo/ }).first().click()
+    await p.waitForSelector('.bp', { timeout: 15000 })
+    check('escolher o campeão leva ao plano de jogo', (await p.getByRole('tab', { name: 'Plano de jogo' }).getAttribute('aria-selected')) === 'true')
+    await p.waitForTimeout(100)
+    check('foco vai para a aba do plano (não se perde)', await p.evaluate(() => document.activeElement?.id === 'view-tab-plan'))
+    check('campeão escolhido aparece como "escolhido por você"', /escolhido por você/.test(await p.locator('.focus-chip').innerText()))
+    check('dica de confronto do oponente mais provável', (await p.locator('.mu').count()) === 1 && /Dica de confronto/.test(await p.locator('.mu h3').innerText()))
+    check('cada linha da dica diz a origem (dado, regra, oficial)', (await p.locator('.mu-lines li .src-tag').count()) >= 3)
+    check('três builds para escolher', (await p.getByRole('radiogroup', { name: 'Escolha uma das builds' }).getByRole('radio').count()) === 3)
+    check('objetivo da build descrito', (await p.locator('.bp-objective p').innerText()).length > 40)
+    check('comportamento por fase (rota, meio, lutas)', (await p.locator('.phase h5').allInnerTexts()).join('|') === 'Fase de rota|Meio de jogo|Lutas de equipe')
+    check('cada orientação de comportamento tem texto', (await p.locator('.phase li').count()) >= 5)
+    await p.waitForTimeout(1500)
+    const imgs = await p.evaluate(() => ({ ok: document.querySelectorAll('.bp .gimg[data-state="ok"]').length, all: document.querySelectorAll('.bp .gimg').length }))
+    check('ícones de itens/runas/feitiços carregam', imgs.ok >= Math.ceil(imgs.all * 0.8) && imgs.all >= 10, `${imgs.ok}/${imgs.all}`)
+    check('arsenal agrupado (iniciais, botas, principais, situacionais)', (await p.locator('.arsenal-head .kicker').allInnerTexts()).join('|') === 'INICIAIS|BOTAS|ITENS PRINCIPAIS|SITUACIONAIS' || (await p.locator('.arsenal-head .kicker').count()) >= 3)
+    await noOverflow(p, 'plano')
+    await shot(p, '20-plano-de-jogo')
+    // trocar de build
+    const cards = p.getByRole('radiogroup', { name: 'Escolha uma das builds' }).getByRole('radio')
+    await cards.nth(0).click()
+    check('trocar de build atualiza o painel', /Meta geral/.test(await p.locator('.bp h3').innerText()))
+    // demonstração: nada vai ao cliente
+    await p.getByRole('button', { name: /Escolher esta build \(demonstração\)/ }).click()
+    await p.waitForSelector('.use-status >> text=/nada é enviado/i', { timeout: 5000 })
+    const applied0 = await p.evaluate(() => (window as any).__LS__.applied.length)
+    check('demonstração nunca envia ao cliente', applied0 === 0)
+    check('build escolhida ganha "Em uso"', (await p.locator('.used-badge').count()) === 1)
+    await shot(p, '21-build-em-uso-demo')
+    // abas por teclado
+    await p.getByRole('tab', { name: 'Plano de jogo' }).focus()
+    await p.keyboard.press('ArrowLeft')
+    check('seta ← volta para Recomendações', (await p.getByRole('tab', { name: 'Recomendações' }).getAttribute('aria-selected')) === 'true')
+    await p.context().close()
+  }
+  {
+    // cliente conectado (auto): escolher pelo seletor, enviar, falhar, desconectar
+    const p = await fresh(browser)
+    await p.evaluate((d) => {
+      const c = (window as any).__LS__
+      c.setLcu({ state: 'connected', phase: 'ChampSelect', lastEventAt: Date.now() })
+      c.setDraft(d)
+    }, lcuLike())
+    await p.waitForSelector('.hero', { timeout: 15000 })
+    await p.waitForTimeout(3500)
+    await p.getByRole('tab', { name: 'Plano de jogo' }).click()
+    await p.getByRole('button', { name: /Trocar campeão|Escolher campeão/ }).click()
+    check('seletor do meu campeão abre com busca', (await p.getByRole('dialog', { name: 'Escolher o meu campeão' }).count()) === 1)
+    check('campeão já escolhido por outro fica desabilitado no seletor', await p.getByRole('button', { name: /Yasuo \(banido ou já escolhido\)/ }).isDisabled())
+    await p.getByRole('searchbox', { name: 'Buscar campeão' }).fill('ahri')
+    await p.keyboard.press('Enter')
+    await p.waitForSelector('.bp', { timeout: 15000 })
+    check('escolha pelo seletor muda o foco', /Ahri/.test(await p.locator('.focus-chip').innerText()) && /escolhido por você/.test(await p.locator('.focus-chip').innerText()))
+    check('plano mostra o campeão escolhido', /Ahri/.test(await p.locator('.plan-head h2').innerText()))
+    // enviar
+    await p.getByRole('radiogroup', { name: 'Escolha uma das builds' }).getByRole('radio').nth(1).click()
+    await p.getByRole('button', { name: 'Usar esta build' }).click()
+    await p.waitForSelector('.use-steps li', { timeout: 8000 })
+    let applied = await p.evaluate(() => (window as any).__LS__.applied)
+    check('"Usar esta build" envia ao cliente (itens e runas, sem feitiços)', applied.length === 1 && applied[0].options.items && applied[0].options.runes && !applied[0].options.spells)
+    check('o pedido leva só ids, papéis e o campeão', applied[0].champion > 0 && applied[0].items.length >= 5 && applied[0].items.every((i: any) => Number.isInteger(i.id) && ['inicial', 'botas', 'principal', 'situacional'].includes(i.role)) && applied[0].runes.shards.length === 3)
+    check('resultado por etapa é mostrado', (await p.locator('.use-steps li[data-status="ok"]').count()) === 2)
+    await shot(p, '22-build-enviada')
+    // opções: desligar runas e reenviar
+    await p.getByRole('checkbox', { name: 'Página de runas' }).uncheck()
+    await p.getByRole('button', { name: 'Enviar de novo ao cliente' }).click()
+    await p.waitForFunction(() => (window as any).__LS__.applied.length === 2)
+    applied = await p.evaluate(() => (window as any).__LS__.applied)
+    check('opção desligada não é enviada', applied[1].options.runes === false)
+    // falha parcial
+    await p.evaluate(() => ((window as any).__LS__.applyMode = 'partial'))
+    await p.getByRole('checkbox', { name: 'Página de runas' }).check()
+    await p.getByRole('button', { name: 'Enviar de novo ao cliente' }).click()
+    await p.waitForSelector('.use-steps li[data-status="failed"]', { timeout: 8000 })
+    check('falha de uma etapa é explicada e as demais seguem', (await p.locator('.use-steps li[data-status="ok"]').count()) === 1 && /recusou/.test(await p.locator('.use-steps li[data-status="failed"]').innerText()))
+    await shot(p, '23-envio-falha-parcial')
+    // cliente desconectado
+    await p.evaluate(() => ((window as any).__LS__.applyMode = 'ok'))
+    await p.evaluate(() => (window as any).__LS__.setLcu({ state: 'reconnecting', attempt: 1 }))
+    const before = await p.evaluate(() => (window as any).__LS__.applied.length)
+    await p.getByRole('button', { name: /Enviar de novo ao cliente|Build escolhida|Usar esta build/ }).click()
+    await p.waitForSelector('.use-status >> text=/não está conectado/i', { timeout: 5000 })
+    check('sem cliente conectado: nada é enviado e o motivo aparece', (await p.evaluate(() => (window as any).__LS__.applied.length)) === before)
+    await p.context().close()
+  }
+  {
+    // escolha do app que deixa de estar disponível (banida depois)
+    const p = await fresh(browser)
+    await p.evaluate((d) => {
+      const c = (window as any).__LS__
+      c.setLcu({ state: 'connected', phase: 'ChampSelect', lastEventAt: Date.now() })
+      c.setDraft(d)
+    }, lcuLike())
+    await p.waitForSelector('.hero', { timeout: 15000 })
+    await p.getByRole('tab', { name: 'Plano de jogo' }).click()
+    await p.getByRole('button', { name: /Trocar campeão|Escolher campeão/ }).click()
+    await p.getByRole('searchbox', { name: 'Buscar campeão' }).fill('ahri')
+    await p.keyboard.press('Enter')
+    await p.waitForSelector('.bp', { timeout: 15000 })
+    const banned = lcuLike()
+    banned.bansEnemies[1] = { champion: 103, state: 'locked' }
+    banned.id = '7001'
+    await p.evaluate((d) => (window as any).__LS__.setDraft(d, '7001'), banned)
+    await p.waitForSelector('.plan-note >> text=/não está mais disponível/', { timeout: 8000 })
+    check('escolha que ficou indisponível é ignorada com aviso', !/escolhido por você/.test(await p.locator('.focus-chip').innerText()))
+    await p.context().close()
+  }
+  {
+    const p = await fresh(browser, { w: 960, h: 620 })
+    await p.getByRole('radio', { name: 'Demo' }).click()
+    for (let i = 0; i < 6; i++) await p.getByRole('button', { name: 'Próximo passo' }).click()
+    await p.getByRole('radio', { name: /Meio/ }).click()
+    await p.waitForSelector('.hero', { timeout: 15000 })
+    await p.getByRole('button', { name: /Escolher e ver plano de jogo/ }).first().click()
+    await p.waitForSelector('.bp', { timeout: 15000 })
+    await noOverflow(p, 'plano 960x620')
+    await shot(p, '24-plano-960x620')
+    await p.context().close()
+  }
+
   /* ---------- reordenação animada e identidade ---------- */
   {
     const p = await fresh(browser)

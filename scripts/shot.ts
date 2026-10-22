@@ -38,8 +38,19 @@ async function main(): Promise<void> {
     await page.locator('.row-main').first().click()
     await page.waitForTimeout(500)
   }
+  if (scenario.includes('+plan')) {
+    await page.getByRole('button', { name: /Escolher e ver plano de jogo/ }).first().click()
+    await page.waitForSelector('.bp', { timeout: 15000 })
+    await page.waitForTimeout(700)
+  }
+  if (scenario.includes('+use')) {
+    await page.getByRole('button', { name: /Usar esta build|Escolher esta build/ }).click()
+    await page.waitForSelector('.use-status >> text=/./', { timeout: 8000 })
+    await page.waitForTimeout(400)
+  }
   if (scenario.includes('+scroll')) {
     await page.locator('.recs-scroll').evaluate((el) => (el.scrollTop = el.scrollHeight))
+    await page.locator('.main').evaluate((el, y) => (el.scrollTop = y > 0 ? y : el.scrollHeight), Number(process.env['SCROLL'] ?? 0))
     await page.waitForTimeout(200)
   }
   await page.screenshot({ path: `screenshots/${name}.png` })

@@ -33,19 +33,31 @@ desenvolvimento. Onde não foi possível verificar, está escrito.
 
 ### Consequências de design
 
-1. O LeagueSense **apresenta até 5 opções com justificativa** e nunca escolhe, bane ou automatiza nada
-   (alinhado a "não ditar decisões" / "oferecer múltiplas opções").
+1. O LeagueSense **apresenta até 5 opções com justificativa** e nunca escolhe, bane, trava campeão nem automatiza o draft
+   (alinhado a "não ditar decisões" / "oferecer múltiplas opções"). A **única escrita** no cliente é a build (itens, runas e,
+   opcionalmente, feitiços) que o jogador manda explicitamente com "Usar esta build".
 2. Só usa o que o jogador já vê no cliente (picks/bans visíveis) e estatísticas agregadas públicas.
 3. **Nenhuma chave Riot é usada na v1.** Se um dia for necessária (ex.: Match‑V5 para histórico pessoal),
    a menor solução segura é o usuário colar sua *chave pessoal* nas configurações e o app guardá‑la com
    `safeStorage` (nunca no bundle/instalador). Uma chave de produção exigiria um proxy no servidor.
-4. **Ação do usuário:** registrar o LeagueSense como produto pessoal no Developer Portal e anotar o uso do LCU
+4. **Atenção (plano de jogo):** orientar "objetivo" e "comportamento" por fase vai além de *destacar decisões*. O app
+   oferece 3 opções, cita o fato por trás de cada orientação e diz que são regras, mas **a Riot pode entender isso como
+   "ditar decisões"** em uma revisão do produto. Vale descrever o recurso com franqueza ao registrar o app e, se a
+   Riot pedir, desligar essas seções. Itens/runas sugeridos só usam estatísticas agregadas públicas e informações do draft.
+5. **Ação do usuário:** registrar o LeagueSense como produto pessoal no Developer Portal e anotar o uso do LCU
    (endpoints na seção abaixo). Isso não pode ser feito por mim.
 
 ## Data Dragon
 
 * `https://ddragon.leagueoflegends.com/api/versions.json` → `16.21.1` (mais recente hoje).
 * `.../cdn/{versão}/data/pt_BR/champion.json` → 173 campeões, nomes em pt‑BR, `key` numérica (= `championId` do LCU).
+* **Catálogo de builds** (pt-BR): `.../cdn/{versão}/data/pt_BR/{item,runesReforged,summoner}.json` → nomes, etiquetas
+  (`Armor`, `SpellBlock`, `Tenacity`…), custo, "Ferimento Grave" (detectado na descrição) e caminhos de ícones.
+  Reduzido por `src/core/catalog.ts`; ao vivo → cache → cópia embutida (`src/core/data/catalog.json`, gerada por
+  `npm run build:data`).
+* **Dicas oficiais para enfrentar** cada campeão: `.../data/pt_BR/champion/{Chave}.json` → `enemytips`.
+* Ícones de item, feitiço, estilo/runa e fragmento: `.../img/item|spell/{id}.png` e `.../cdn/img/perk-images/...`
+  (verificados, todos 200).
 * Imagens: `.../cdn/{versão}/img/champion/{id}.png` (ícone quadrado 120 px) e
   `.../cdn/img/champion/splash/{id}_0.jpg` / `loading/{id}_0.jpg`. O app as baixa sob demanda e guarda em disco
   (não embute imagens da Riot no instalador).
@@ -63,6 +75,8 @@ Ferramentas usadas (todas verificadas):
 | `lol_get_champion_analysis` (`tier=…`) | Base por elo; `trends.win[].version` = **patch** | `win_rate` vem **arredondado a 2 casas**; contagens `play` exatas |
 | `lol_get_lane_matchup_guide` | **Tabela completa de matchups** (`data.counters[]` ≈ 54 oponentes com `play`/`win`) | JSON de ~50 KB; sem filtro de elo; ~2,5 s/chamada |
 | `lol_get_champion_synergies` | Sinergia por par de rotas | **Só top 10** parceiros; sem filtro de elo |
+| `lol_get_champion_analysis` (campos de build) | **Builds gerais**: núcleo, botas, iniciais, 4º–6º item, feitiços, runas, ordem de habilidades | aceita `tier`; `names` das listas gerais vêm como os próprios ids (os nomes vêm do Data Dragon) |
+| `lol_get_lane_matchup_guide` (campos de build) | **Builds do confronto**, estilo, vantagens, vitórias por duração, dica | mesma chamada dos confrontos; dica **só em inglês** (`lang`: `en_US`/`ko_KR`) |
 
 Pontos que importam:
 
@@ -101,6 +115,23 @@ Endpoints usados (nomes conferidos em `@hasagi/types@16.12.2`, gerado do cliente
 | `GET /lol-champion-mastery/v1/local-player/champion-mastery` | maestria (usada só como estimativa inicial de familiaridade) |
 | `GET /lol-summoner/v1/current-summoner` | `puuid` (exibição/diagnóstico) |
 
+### Escrita no cliente (builds)
+
+Usada só quando o jogador clica em **"Usar esta build"** (nunca sozinha, nunca em modo demonstração). Nomes conferidos nos
+mesmos tipos gerados (`@hasagi/types@16.12.2`); **não testados contra o cliente real**:
+
+| Endpoint | Uso |
+|---|---|
+| `GET /lol-summoner/v1/current-summoner` | `summonerId` / `accountId` do conjunto de itens |
+| `GET`/`PUT /lol-item-sets/v1/item-sets/{summonerId}/sets` | lê tudo, troca só o conjunto "LeagueSense · Campeão · …" do mesmo campeão e devolve a lista inteira |
+| `GET /lol-perks/v1/pages`, `GET /lol-perks/v1/inventory` | acha a página "LeagueSense …" e verifica se há espaço |
+| `POST /lol-perks/v1/pages`, `PUT /lol-perks/v1/pages/{id}`, `PUT /lol-perks/v1/currentpage` | cria/atualiza a página própria e a seleciona |
+| `DELETE /lol-perks/v1/pages/{id}` | **só** "Remover do cliente o que o LeagueSense criou", e só páginas "LeagueSense …" |
+| `PATCH /lol-champ-select/v1/session/my-selection` | feitiços (opcional; só na seleção de campeões) |
+
+Outras escritas são recusadas antes de sair do app. A Riot pede que **os endpoints do LCU usados sejam registrados** no
+Developer Portal: inclua também estes de escrita. Detalhes e garantias em [BUILDS.md](BUILDS.md).
+
 Limitação importante: o tipo de `actions[]` aparece como `unknown[]` no esquema gerado. O formato dos elementos
 (`actorCellId`, `championId`, `completed`, `isInProgress`, `type`) é o conhecido pela comunidade e **não foi
 confirmado contra um cliente real aqui**; o normalizador é tolerante (campos ausentes não quebram nada) e testado
@@ -122,4 +153,6 @@ contra um LCU falso que reproduz esse formato.
 | Nomes: todos os campeões do roster resolvem no OP.GG | `npm run check:data` (rede) | 173/173 ok, 0 falhas (22/10/2026) |
 | Imagens (Data Dragon) pelo protocolo local | Electron real | ok (9+ imagens por tela) |
 | Draft via LCU | **LCU falso** (HTTP/WS reais, protocolo da documentação) | ok; **cliente real não testado** |
+| Builds e dica de confronto (OP.GG + Data Dragon) | chamadas reais, Electron real (`electron-smoke`) | ok (3 builds, ícones pelo protocolo local) |
+| Envio da build ao cliente | **LCU falso** (PUT/POST/PATCH reais por HTTP) | ok; **cliente real não testado** |
 | TLS do LCU | servidor com certificado autoassinado gerado por `openssl` | cai para loopback-only e sinaliza |

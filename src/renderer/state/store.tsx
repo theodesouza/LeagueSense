@@ -1,5 +1,6 @@
 import { createContext, useContext, type Dispatch } from 'react'
-import type { DataStatus, DraftUpdate, LcuStatus, RosterPayload } from '@shared/api'
+import type { ApplyResult, DataStatus, DraftUpdate, LcuStatus, RosterPayload } from '@shared/api'
+import type { BuildId } from '@core/build-types'
 import {
   emptyDraft,
   setMe,
@@ -13,6 +14,20 @@ import { DEFAULT_PREFERENCES, type ChampionInfo, type Draft, type PickState, typ
 
 export type Mode = 'auto' | 'manual' | 'demo'
 export type SheetTab = 'prefs' | 'pool' | 'data' | 'about'
+export type View = 'recs' | 'plan'
+
+/** Build que o jogador escolheu usar e o que aconteceu ao enviá-la ao cliente. */
+export interface BuildUse {
+  champion: number
+  build: BuildId
+  title: string
+  phase: 'sending' | 'done'
+  /** null enquanto envia, ou quando nada foi enviado (modo demonstração / cliente fechado). */
+  result: ApplyResult | null
+  /** Por que nada foi enviado ao cliente (quando `result` é null e `phase` é 'done'). */
+  skipped: string | null
+  at: number
+}
 
 export interface State {
   prefs: Preferences
@@ -31,6 +46,11 @@ export interface State {
   sheet: SheetTab | null
   picker: SlotRef | null
   expanded: number | null
+  /** Campeão escolhido pelo jogador no app (vale até ele travar outro no cliente). */
+  myPick: number | null
+  myPicker: boolean
+  view: View
+  use: BuildUse | null
 }
 
 export const initialLcu: LcuStatus = { state: 'searching', phase: 'None', lastEventAt: null, attempt: 0, detail: null, region: null }
@@ -56,7 +76,11 @@ export const initialState: State = {
   data: initialData,
   sheet: null,
   picker: null,
-  expanded: null
+  expanded: null,
+  myPick: null,
+  myPicker: false,
+  view: 'recs',
+  use: null
 }
 
 export type Action =
@@ -79,6 +103,11 @@ export type Action =
   | { type: 'sheet'; tab: SheetTab | null }
   | { type: 'picker'; ref: SlotRef | null }
   | { type: 'expand'; id: number | null }
+  | { type: 'myPick'; champion: number | null; toPlan?: boolean }
+  | { type: 'myPicker'; open: boolean }
+  | { type: 'view'; view: View }
+  | { type: 'use'; use: BuildUse | null }
+  | { type: 'useDone'; at: number; result: ApplyResult | null; skipped?: string | null }
 
 export function reducer(s: State, a: Action): State {
   switch (a.type) {
@@ -91,14 +120,14 @@ export function reducer(s: State, a: Action): State {
     case 'lcuDraft': {
       // outra seleção (época diferente): descarta dicas, detalhes abertos e popovers do draft antigo
       const newEpoch = a.update.epoch !== s.lcuDraft.epoch
-      return { ...s, lcuDraft: a.update, hints: newEpoch ? {} : s.hints, expanded: newEpoch ? null : s.expanded, picker: newEpoch && s.mode === 'auto' ? null : s.picker }
+      return { ...s, lcuDraft: a.update, hints: newEpoch ? {} : s.hints, expanded: newEpoch ? null : s.expanded, picker: newEpoch && s.mode === 'auto' ? null : s.picker, ...(newEpoch && s.mode === 'auto' ? { myPick: null, use: null, view: 'recs' as const, myPicker: false } : {}) }
     }
     case 'player':
       return { ...s, player: a.player }
     case 'data':
       return { ...s, data: a.data }
     case 'mode':
-      return { ...s, mode: a.mode, picker: null, expanded: null, demoPlaying: a.mode === 'demo' ? s.demoPlaying : false, demoStep: a.mode === 'demo' && s.mode !== 'demo' ? 0 : s.demoStep }
+      return { ...s, mode: a.mode, picker: null, expanded: null, demoPlaying: a.mode === 'demo' ? s.demoPlaying : false, demoStep: a.mode === 'demo' && s.mode !== 'demo' ? 0 : s.demoStep, myPick: null, myPicker: false, view: 'recs', use: null }
     case 'manualSet':
       return { ...s, manualDraft: setSlotChampion(s.manualDraft, a.ref, a.champion, a.state) }
     case 'manualState':
@@ -108,7 +137,7 @@ export function reducer(s: State, a: Action): State {
     case 'manualMe':
       return { ...s, manualDraft: setMe(s.manualDraft, a.index) }
     case 'manualReset':
-      return { ...s, manualDraft: newManualDraft(), expanded: null }
+      return { ...s, manualDraft: newManualDraft(), expanded: null, myPick: null, use: null }
     case 'manualFrom':
       return { ...s, manualDraft: { ...a.draft, id: 'manual', source: 'manual' }, mode: 'manual', picker: null, expanded: null }
     case 'hint': {
@@ -127,6 +156,17 @@ export function reducer(s: State, a: Action): State {
       return { ...s, picker: a.ref }
     case 'expand':
       return { ...s, expanded: s.expanded === a.id ? null : a.id }
+    case 'myPick':
+      return { ...s, myPick: a.champion, myPicker: false, view: a.toPlan && a.champion != null ? 'plan' : s.view, use: s.use && s.use.champion === a.champion ? s.use : null }
+    case 'myPicker':
+      return { ...s, myPicker: a.open }
+    case 'view':
+      return { ...s, view: a.view }
+    case 'use':
+      return { ...s, use: a.use }
+    case 'useDone':
+      // só vale se ainda for o mesmo envio (o jogador pode ter trocado de build/campeão enquanto esperava)
+      return s.use && s.use.at === a.at ? { ...s, use: { ...s.use, phase: 'done', result: a.result, skipped: a.skipped ?? null } } : s
   }
 }
 

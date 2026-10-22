@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { emptyDraft, myDeclaredPosition, unavailableChampions } from '@core/draft'
 import { recommend } from '@core/engine'
 import { planFetches, type FetchPlan } from '@core/fetch-plan'
+import type { BuildBundle } from '@core/build-types'
 import type { TraitsTable } from '@core/traits'
-import type { ChampionInfo, Draft, Position, RecommendationResult, StatsSnapshot } from '@core/types'
+import type { ChampionInfo, Draft, EloTier, Position, RecommendationResult, StatsSnapshot } from '@core/types'
 import { statsContextKey } from '@shared/channels'
 import { applyStatsUpdate, initialStatsSync, type StatsSyncState } from '@shared/stats-sync'
 import { api } from '../api'
@@ -181,4 +182,43 @@ export function useRecommendations(args: {
     prev.current = result.ranking
   }, [result])
   return result
+}
+
+
+export interface BuildData {
+  status: 'idle' | 'loading' | 'ready' | 'error'
+  /** Último pacote recebido (pode ser de um oponente anterior enquanto o novo carrega). */
+  bundle: BuildBundle | null
+  retry: () => void
+}
+
+/**
+ * Busca os dados de build do campeão em foco. Respostas fora de ordem são descartadas (só vale a do
+ * último pedido) e, enquanto o pedido novo carrega, o pacote anterior do MESMO campeão segue visível.
+ */
+export function useBuildBundle(args: { champion: number | null; position: Position | null; elo: EloTier; opponent: number | null; mode: 'live' | 'demo'; enabled: boolean }): BuildData {
+  const { champion, position, elo, opponent, mode, enabled } = args
+  const [s, setS] = useState<{ key: string; status: BuildData['status']; bundle: BuildBundle | null }>({ key: '', status: 'idle', bundle: null })
+  const [attempt, setAttempt] = useState(0)
+  const key = enabled && champion != null && position ? JSON.stringify([mode, champion, position, elo, opponent]) : ''
+  useEffect(() => {
+    if (!key || champion == null || !position) {
+      setS({ key: '', status: 'idle', bundle: null })
+      return
+    }
+    let cancelled = false
+    setS((prev) => ({ key, status: 'loading', bundle: prev.bundle?.champion === champion && prev.bundle.position === position ? prev.bundle : null }))
+    const t = setTimeout(() => {
+      api.builds
+        .request({ champion, position, elo, opponent }, mode)
+        .then((bundle) => !cancelled && setS({ key, status: 'ready', bundle }))
+        .catch(() => !cancelled && setS((prev) => ({ key, status: 'error', bundle: prev.bundle })))
+    }, 250)
+    return () => {
+      cancelled = true
+      clearTimeout(t)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, attempt])
+  return { status: s.key === key ? s.status : key ? 'loading' : 'idle', bundle: s.bundle, retry: () => setAttempt((n) => n + 1) }
 }

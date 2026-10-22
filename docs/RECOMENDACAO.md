@@ -79,7 +79,12 @@ A maestria **só** entra quando você não definiu a familiaridade — nunca as 
 | Taxa de escolha / taxa de ban | ❌ | só informativas; usá-las duplicaria a taxa de vitória |
 | "Tier" do OP.GG | ❌ | é derivado de vitória/escolha/ban (duplicaria) |
 | Composição inimiga (dano/CC) | parcial | só mergulho inimigo (desengajar) |
-| Builds, runas | ❌ | fora do escopo |
+| Builds, runas, feitiços | ❌ no ranking | tratados no plano de jogo, depois da escolha ([BUILDS.md](BUILDS.md)) |
+
+## 4b. "Por que está em 1º"
+
+O destaque explica a posição do 1º comparando-o ao 2º fator a fator (mesmas contribuições da soma; diferenças < 0,3
+p.p. ignoradas; empate dentro da histerese é dito como tal). Ver [BUILDS.md](BUILDS.md#1-por-que-o-campeão-está-no-topo-explain-rankts).
 
 ## 5. Candidatos e exclusões
 

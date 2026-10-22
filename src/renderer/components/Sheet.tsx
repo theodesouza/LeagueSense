@@ -117,6 +117,28 @@ function PoolTab(): ReactElement {
   )
 }
 
+function SendSection(): ReactElement {
+  const { state, setPrefs } = useApp()
+  const [busy, setBusy] = useState(false)
+  const [msg, setMsg] = useState<string | null>(null)
+  const o = state.prefs.sendBuild
+  const connected = state.lcu.state === 'connected'
+  return (
+    <section>
+      <div className="sec-head"><h3>Envio da build ao cliente</h3><p className="muted small">O que “Usar esta build” grava no cliente do jogo. Só mexe em itens “LeagueSense …”; nada seu é alterado ou apagado.</p></div>
+      <label className="check"><input type="checkbox" checked={o.items} onChange={(e) => setPrefs({ sendBuild: { ...o, items: e.target.checked } })} /><span>Conjunto de itens (loja → “Conjuntos de itens”)</span></label>
+      <label className="check"><input type="checkbox" checked={o.runes} onChange={(e) => setPrefs({ sendBuild: { ...o, runes: e.target.checked } })} /><span>Página de runas “LeagueSense …” (usa 1 espaço de página)</span></label>
+      <label className="check"><input type="checkbox" checked={o.spells} onChange={(e) => setPrefs({ sendBuild: { ...o, spells: e.target.checked } })} /><span>Feitiços de invocador (somente durante a seleção de campeões)</span></label>
+      <div className="sec-tools">
+        <button type="button" className="btn ghost" disabled={!connected || busy} onClick={() => { setBusy(true); setMsg(null); void api.lcu.clearBuilds().then((r) => setMsg(r.steps.map((s) => s.message).join(' '))).catch(() => setMsg('Não foi possível falar com o cliente.')).finally(() => setBusy(false)) }}>Remover do cliente o que o LeagueSense criou</button>
+      </div>
+      {!connected && <p className="muted small">Disponível com o cliente conectado.</p>}
+      {msg && <p className="note" role="status">{msg}</p>}
+      <p className="note"><strong>Limitação:</strong> o envio usa a interface local do cliente (LCU), que a Riot não suporta oficialmente, e <strong>não foi testado contra o cliente real</strong> — só contra um cliente simulado. Se algo falhar, o app mostra qual etapa não funcionou.</p>
+    </section>
+  )
+}
+
 function PrefsTab(): ReactElement {
   const { state, setPrefs } = useApp()
   return (
@@ -138,6 +160,7 @@ function PrefsTab(): ReactElement {
           ))}
         </div>
       </section>
+      <SendSection />
       <section>
         <div className="sec-head"><h3>Animações</h3><p className="muted small">“Sistema” segue a preferência de movimento reduzido do Windows.</p></div>
         <div className="seg" role="radiogroup" aria-label="Animações">
@@ -170,7 +193,7 @@ function DataTab(): ReactElement {
           <div><dt>Cliente do LoL (LCU) <span className="tag warn">não oficial</span></dt><dd>
             {l.state === 'connected' ? `Conectado · ${l.phase}${l.region ? ` · ${l.region}` : ''}` : l.state === 'reconnecting' ? `Reconectando (tentativa ${l.attempt})` : 'Aguardando o cliente abrir.'}
             {l.detail && <span className="muted small block">{l.detail}</span>}
-            <span className="muted small block">Leitura local (127.0.0.1) do estado da seleção, posse e maestria. A Riot não dá suporte oficial a esta interface.</span>
+            <span className="muted small block">Leitura local (127.0.0.1) do estado da seleção, posse e maestria; escrita apenas do que você manda (“Usar esta build”: itens, runas, feitiços). A Riot não dá suporte oficial a esta interface.</span>
           </dd></div>
         </dl>
       </section>

@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactElement } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react'
 import { createPortal } from 'react-dom'
-import { Search, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { championsInDraft, getSlot, type SlotRef } from '@core/draft'
 import type { TraitsTable } from '@core/traits'
 import { POSITIONS, POSITION_LABEL, type Draft, type PickState, type Position } from '@core/types'
-import { PositionIcon } from './icons'
-import { Portrait } from './Portrait'
+import { ChampionGrid } from './ChampionGrid'
 import type { Editable } from './DraftBoard'
 import { useApp } from '../state/store'
 
@@ -18,8 +17,6 @@ interface Props {
   onClose: () => void
 }
 
-const norm = (s: string): string => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-
 /**
  * Popover ancorado no espaço clicado (NÃO é um modal automático: só abre por ação do usuário).
  * Manual: escolhe campeão, estado, posição e "sou eu". Automático: só a dica de posição.
@@ -28,8 +25,6 @@ export function SlotPopover({ slotRef, anchor, draft, editable, traits, onClose 
   const { champions, version, dispatch } = useApp()
   const box = useRef<HTMLDivElement | null>(null)
   const search = useRef<HTMLInputElement | null>(null)
-  const [query, setQuery] = useState('')
-  const [role, setRole] = useState<Position | 'all'>('all')
   const [pickState, setPickState] = useState<PickState>('locked')
   // posição calculada já na primeira renderização (o foco inicial depende de o DOM existir)
   const [pos] = useState(() => {
@@ -77,30 +72,9 @@ export function SlotPopover({ slotRef, anchor, draft, editable, traits, onClose 
     }
   }, [anchor, editable, onClose])
 
-  const list = useMemo(() => {
-    const q = norm(query.trim())
-    return [...champions.values()]
-      .filter((c) => (q ? norm(c.name).includes(q) || norm(c.nameEn).includes(q) : true))
-      .filter((c) => (role === 'all' ? true : traits[c.id]?.positions.includes(role) ?? true))
-      .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
-  }, [champions, query, role, traits])
-
   const choose = (id: number): void => {
     dispatch({ type: 'manualSet', ref: slotRef, champion: id, state: slotRef.kind === 'ban' ? 'locked' : pickState })
     closeAndRestore()
-  }
-
-  const onGridKey = (e: KeyboardEvent<HTMLDivElement>): void => {
-    const tiles = [...e.currentTarget.querySelectorAll<HTMLButtonElement>('button.tile:not(:disabled)')]
-    const i = tiles.indexOf(document.activeElement as HTMLButtonElement)
-    if (i < 0) return
-    const cols = Math.max(1, Math.floor(e.currentTarget.clientWidth / 64))
-    const move = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: cols, ArrowUp: -cols }[e.key]
-    if (move == null) return
-    e.preventDefault()
-    const next = tiles[i + move]
-    if (next) next.focus()
-    else if (move < 0) search.current?.focus()
   }
 
   return createPortal(
@@ -113,48 +87,7 @@ export function SlotPopover({ slotRef, anchor, draft, editable, traits, onClose 
       </header>
 
       {editable === 'full' && (
-        <>
-          <label className="search">
-            <Search size={15} aria-hidden="true" />
-            <input
-              ref={search}
-              type="search"
-              placeholder="Buscar campeão…"
-              aria-label="Buscar campeão"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'ArrowDown') {
-                  e.preventDefault()
-                  box.current?.querySelector<HTMLButtonElement>('button.tile:not(:disabled)')?.focus()
-                }
-                if (e.key === 'Enter' && list.length > 0) {
-                  const first = list.find((c) => !used.has(c.id) || c.id === slot?.champion)
-                  if (first) choose(first.id)
-                }
-              }}
-            />
-          </label>
-          <div className="chips" role="radiogroup" aria-label="Filtrar por posição">
-            {(['all', ...POSITIONS] as const).map((p) => (
-              <button key={p} type="button" role="radio" aria-checked={role === p} className="chip" data-on={role === p || undefined} onClick={() => setRole(p)}>
-                {p === 'all' ? 'Todos' : (<><PositionIcon position={p} size={13} />{POSITION_LABEL[p]}</>)}
-              </button>
-            ))}
-          </div>
-          <div className="tiles" role="group" aria-label="Campeões" onKeyDown={onGridKey}>
-            {list.map((c) => {
-              const inUse = used.has(c.id) && c.id !== slot?.champion
-              return (
-                <button key={c.id} type="button" className="tile" disabled={inUse} data-current={c.id === slot?.champion || undefined} aria-label={inUse ? `${c.name} (já está no draft)` : c.name} title={inUse ? 'Já está no draft' : c.name} onClick={() => choose(c.id)}>
-                  <Portrait champion={c} version={version} size={44} />
-                  <span>{c.name}</span>
-                </button>
-              )
-            })}
-            {list.length === 0 && <p className="muted pad">Nenhum campeão encontrado.</p>}
-          </div>
-        </>
+        <ChampionGrid champions={champions} version={version} traits={traits} disabled={used} disabledLabel="já está no draft" currentId={slot?.champion ?? null} searchRef={search} onChoose={choose} />
       )}
 
       <footer className="pop-foot">

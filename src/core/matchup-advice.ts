@@ -15,6 +15,8 @@ export interface MatchupInput {
   guide: MatchupGuideData | null
   /** Dicas oficiais da Riot (pt-BR) para enfrentar o oponente. */
   riotTips: string[]
+  /** Origem dos dados do guia: no modo demonstração tudo é fictício e é rotulado assim. */
+  dataSource?: 'opgg' | 'demo'
 }
 
 const K = 300
@@ -26,6 +28,9 @@ const trim = (s: string): string => s.replace(/\s+/g, ' ').trim()
  * de onde vem, para o usuário saber o que é dado e o que é regra.
  */
 export function matchupAdvice(i: MatchupInput): MatchupAdvice {
+  const demo = i.dataSource === 'demo'
+  const SRC = demo ? 'demonstração (fictício)' : 'OP.GG'
+  const WHO = demo ? 'Os dados de demonstração (fictícios)' : 'O OP.GG'
   const opp = i.nameOf(i.opponent)
   const me = i.nameOf(i.me)
   const lines: MatchupLine[] = []
@@ -44,7 +49,7 @@ export function matchupAdvice(i: MatchupInput): MatchupAdvice {
         verdict === 'sem-dados'
           ? `Poucos jogos de ${me} contra ${opp} (${fmtInt(i.record.play)}): ${fmtPct(wr)} de vitórias, sem confiança para dizer quem leva vantagem.`
           : `${me} vence ${fmtPct(wr)} das partidas contra ${opp} (${fmtInt(i.record.play)} jogos; ${fmtPct(adj)} depois de ajustar pela amostra) — confronto ${verdict === 'favoravel' ? 'favorável' : verdict === 'desfavoravel' ? 'desfavorável' : 'equilibrado'}.`,
-      source: 'OP.GG · taxa de vitória do confronto'
+      source: `${SRC} · taxa de vitória do confronto`
     })
   }
 
@@ -53,21 +58,21 @@ export function matchupAdvice(i: MatchupInput): MatchupAdvice {
   if (g?.playStyle) {
     lines.push({
       kind: 'estilo',
-      text: g.playStyle === 'defensive' ? `O OP.GG recomenda jogar mais defensivo neste confronto: farme com segurança e evite trocas caras.` : g.playStyle === 'aggressive' ? `O OP.GG recomenda jogar mais agressivo neste confronto: pressione a rota e use sua vantagem.` : `O OP.GG classifica o confronto como equilibrado: sem necessidade de jogar muito agressivo ou defensivo.`,
-      source: 'OP.GG · análise do confronto'
+      text: g.playStyle === 'defensive' ? `${WHO} recomenda jogar mais defensivo neste confronto: farme com segurança e evite trocas caras.` : g.playStyle === 'aggressive' ? `${WHO} recomenda jogar mais agressivo neste confronto: pressione a rota e use sua vantagem.` : `${WHO} classifica o confronto como equilibrado: sem necessidade de jogar muito agressivo ou defensivo.`,
+      source: `${SRC} · análise do confronto`
     })
   }
   if (g?.laneAdvantage && g.laneAdvantage !== 'even') {
-    lines.push({ kind: 'estilo', text: g.laneAdvantage === 'me' ? `A vantagem na rota (fase de rotas) é sua.` : `A vantagem na rota é do ${opp}: respeite o nível 1–3 e evite brigar sem necessidade.`, source: 'OP.GG · análise do confronto' })
+    lines.push({ kind: 'estilo', text: g.laneAdvantage === 'me' ? `A vantagem na rota (fase de rotas) é sua.` : `A vantagem na rota é do ${opp}: respeite o nível 1–3 e evite brigar sem necessidade.`, source: `${SRC} · análise do confronto` })
   }
   if (g?.soloKillAdvantage && g.soloKillAdvantage !== 'even') {
-    lines.push({ kind: 'estilo', text: g.soloKillAdvantage === 'opponent' ? `${opp} tem vantagem em abates 1x1: não aceite duelos longos sem sua habilidade principal e sem escape.` : `Você tem vantagem em abates 1x1: um all-in bem cronometrado pode eliminar ${opp}.`, source: 'OP.GG · análise do confronto' })
+    lines.push({ kind: 'estilo', text: g.soloKillAdvantage === 'opponent' ? `${opp} tem vantagem em abates 1x1: não aceite duelos longos sem sua habilidade principal e sem escape.` : `Você tem vantagem em abates 1x1: um all-in bem cronometrado pode eliminar ${opp}.`, source: `${SRC} · análise do confronto` })
   }
   const best = g?.gameLengths.length ? [...g.gameLengths].sort((a, b) => b.rate - a.rate)[0] : undefined
   const worst = g?.gameLengths.length ? [...g.gameLengths].sort((a, b) => a.rate - b.rate)[0] : undefined
   if (best && worst && best.rate - worst.rate >= 0.04) {
     const span = (from: number): string => (from === 0 ? 'até 25 min' : from >= 40 ? 'depois de 40 min' : `entre ${from} e ${from + 5} min`)
-    lines.push({ kind: 'estilo', text: `Neste confronto sua taxa de vitória é maior em partidas ${span(best.from)} (${fmtPct(best.rate)}) e menor ${span(worst.from)} (${fmtPct(worst.rate)}). Indicativo: a amostra por duração não é informada.`, source: 'OP.GG · vitórias por duração' })
+    lines.push({ kind: 'estilo', text: `Neste confronto sua taxa de vitória é maior em partidas ${span(best.from)} (${fmtPct(best.rate)}) e menor ${span(worst.from)} (${fmtPct(worst.rate)}). Indicativo: a amostra por duração não é informada.`, source: `${SRC} · vitórias por duração` })
   }
 
   /* ---- regras do LeagueSense sobre traços ---- */
@@ -82,8 +87,8 @@ export function matchupAdvice(i: MatchupInput): MatchupAdvice {
   if (o.frontline >= 0.8 && m.frontline < 0.6) rule(`${opp} é resistente: trocas longas rendem pouco dano. Priorize farm, vantagem de nível e objetivos em vez de forçar abates.`)
 
   /* ---- dicas oficiais (Data Dragon, pt-BR) e dica do OP.GG ---- */
-  for (const t of i.riotTips.slice(0, 3)) lines.push({ kind: 'riot', text: trim(t), source: `Dicas oficiais da Riot contra ${opp}` })
-  if (g?.tipEn) lines.push({ kind: 'opgg', text: trim(g.tipEn), source: 'OP.GG · dica em inglês (não traduzida)' })
+  for (const t of i.riotTips.slice(0, 3)) lines.push({ kind: 'riot', text: trim(t), source: demo ? 'demonstração (fictício) · dica de exemplo' : `Dicas oficiais da Riot contra ${opp}` })
+  if (g?.tipEn) lines.push({ kind: 'opgg', text: trim(g.tipEn), source: `${SRC} · dica em inglês (não traduzida)` })
 
   const prov = i.probability >= 0.95 ? 'oponente de rota' : `provável oponente de rota, ${Math.round(i.probability * 100)}%`
   const vtxt = { favoravel: 'confronto favorável', equilibrado: 'confronto equilibrado', desfavoravel: 'confronto desfavorável', 'sem-dados': 'sem dados suficientes de confronto' }[verdict]

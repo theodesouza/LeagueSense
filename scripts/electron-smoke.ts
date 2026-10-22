@@ -102,6 +102,37 @@ async function main(): Promise<void> {
   check('recomendações citam o oponente de rota provável', /Yasuo/.test(text))
   await page.screenshot({ path: 'screenshots/e3-inimigos-escolhidos.png' })
 
+  // plano de jogo com dados reais + envio da build ao LCU FALSO
+  lcu.itemSets.itemSets = [{ uid: 'meu-conjunto', title: 'Meu conjunto', associatedChampions: [103], blocks: [] }]
+  lcu.pages = [{ id: 1, name: 'Minha página', isEditable: true, isDeletable: true }]
+  await page.getByRole('button', { name: /Escolher e ver plano de jogo/ }).first().click()
+  await page.waitForSelector('.bp', { timeout: 120000 })
+  await page.waitForTimeout(6000)
+  const planText = await page.locator('.plan').innerText()
+  check('plano de jogo montado com dados reais (3 builds, objetivo, comportamento)', (await page.getByRole('radiogroup', { name: 'Escolha uma das builds' }).getByRole('radio').count()) >= 2 && (await page.locator('.bp-objective p').innerText()).length > 40 && (await page.locator('.phase h5').count()) === 3, planText.slice(0, 80).replace(/\n/g, ' '))
+  check('dica de confronto aparece com a origem de cada linha', /Dica de confronto/.test(planText) && (await page.locator('.mu-lines li .src-tag').count()) >= 2)
+  const gimg = await page.evaluate(() => ({ ok: document.querySelectorAll('.bp .gimg[data-state="ok"]').length, all: document.querySelectorAll('.bp .gimg').length }))
+  check('ícones de itens, runas e feitiços carregam pelo protocolo local', gimg.all > 0 && gimg.ok >= Math.ceil(gimg.all * 0.8), `${gimg.ok}/${gimg.all}`)
+  const iconSrc = await page.evaluate(() => [...document.querySelectorAll('.bp .gimg img')].map((i) => (i as HTMLImageElement).src.split('/')[2]))
+  check('imagens vêm de leaguesense-img://item, spell e rune', ['item', 'spell', 'rune'].every((k) => iconSrc.includes(k)), [...new Set(iconSrc)].join(','))
+  await page.screenshot({ path: 'screenshots/e6-plano-de-jogo.png', fullPage: false })
+  await page.getByRole('checkbox', { name: /Feitiços/ }).check()
+  await page.getByRole('button', { name: 'Usar esta build' }).click()
+  await page.waitForSelector('.use-steps li', { timeout: 15000 })
+  await page.waitForTimeout(500)
+  const stepsOk = await page.locator('.use-steps li[data-status="ok"]').count()
+  check('build enviada ao cliente: etapas concluídas', stepsOk >= 2, `${stepsOk} etapas ok; ${await page.locator('.use-steps').innerText().then((t) => t.replace(/\n/g, ' | '))}`)
+  const mine = lcu.itemSets.itemSets.filter((x) => String(x['title']).startsWith('LeagueSense'))
+  check('conjunto de itens do LeagueSense criado no cliente (sem tocar no do jogador)', mine.length === 1 && lcu.itemSets.itemSets.some((x) => x['uid'] === 'meu-conjunto'), lcu.itemSets.itemSets.map((x) => x['title']).join(' / '))
+  const blocks = (mine[0]?.['blocks'] as { type: string; items: { id: string }[] }[] | undefined) ?? []
+  check('arsenal tem iniciais, botas, principais e visão', ['Iniciais', 'Botas'].every((t) => blocks.some((b) => b.type === t)) && blocks.some((b) => b.type.startsWith('Itens principais')) && blocks.some((b) => b.type === 'Visão'), blocks.map((b) => `${b.type}(${b.items.length})`).join(', '))
+  check('página de runas criada e selecionada; a do jogador intacta', lcu.pages.some((x) => x.name.startsWith('LeagueSense')) && lcu.pages.some((x) => x.name === 'Minha página') && lcu.currentPage === lcu.pages.find((x) => x.name.startsWith('LeagueSense'))?.id, lcu.pages.map((x) => x.name).join(' / '))
+  check('feitiços definidos durante a seleção (Flash na segunda posição)', lcu.mySelection != null, JSON.stringify(lcu.mySelection))
+  check('nenhuma escrita fora da lista permitida', lcu.writes.every((w) => /item-sets|lol-perks|my-selection/.test(w.path)) && !lcu.writes.some((w) => w.method === 'DELETE'), lcu.writes.map((w) => `${w.method} ${w.path.split('/').slice(-2).join('/')}`).join(', '))
+  await page.screenshot({ path: 'screenshots/e7-build-enviada.png' })
+  await page.getByRole('tab', { name: 'Recomendações' }).click()
+  await page.waitForTimeout(400)
+
   // sai do draft
   lcu.phase = 'InProgress'
   lcu.emit('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', 'InProgress')

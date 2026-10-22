@@ -87,8 +87,8 @@ function runesFor(catalog: Catalog, arch: Archetype, rand: () => number): RunePa
 }
 
 const spellsFor = (catalog: Catalog, arch: Archetype, rand: () => number): ItemSet | null => {
-  const second = arch === 'tanque' || arch === 'lutador' ? 12 : arch === 'suporte' ? 3 : arch === 'atirador' ? 7 : 4
-  const ids = arch === 'assassino' ? [4, 14] : [4, second]
+  const second = arch === 'tanque' || arch === 'lutador' ? 12 : arch === 'suporte' ? 3 : arch === 'atirador' ? 7 : 14
+  const ids = [4, second]
   if (!ids.every((id) => catalog.spells[id])) return null
   return itemSet(ids, catalog, rand, 9000, 0.7)
 }

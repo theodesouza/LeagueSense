@@ -1,8 +1,9 @@
 import { useEffect, useId, useMemo, useState, type ReactElement, type ReactNode } from 'react'
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
-import { CircleAlert, CircleCheck, CloudOff, Database, FlaskConical, Gamepad2, Hourglass, Info, PlugZap, RefreshCw, TriangleAlert, ChevronDown, Pencil } from 'lucide-react'
+import { CircleAlert, CircleCheck, CloudOff, Database, FlaskConical, Gamepad2, Hourglass, Info, PlugZap, RefreshCw, TriangleAlert, ChevronDown, Pencil, Trophy, Map as MapPin } from 'lucide-react'
 import { POSITIONS, POSITION_LABEL, type ChampionInfo, type DataQuality, type Position, type Recommendation, type RecommendationResult } from '@core/types'
 import type { TraitsTable } from '@core/traits'
+import type { Focus } from '@core/focus'
 import { fmtSignedPp } from '@core/format'
 import { api } from '../api'
 import { useApp, type Mode } from '../state/store'
@@ -59,7 +60,46 @@ function Risk({ rec }: { rec: Recommendation }): ReactElement {
   )
 }
 
-function Hero({ rec, champion, version, position, result, expanded, onToggle, champions }: {
+function WhyFirst({ result, champions }: { result: RecommendationResult; champions: ReadonlyMap<number, ChampionInfo> }): ReactElement | null {
+  const ex = result.rankExplanation
+  if (!ex) return null
+  const name = (id: number | null): string => (id != null ? champions.get(id)?.name ?? `Campeão ${id}` : '')
+  return (
+    <section className="why-top" aria-label={`Por que ${name(ex.first)} está em 1º`}>
+      <h3 className="why-title"><Trophy size={14} aria-hidden="true" />Por que está em 1º</h3>
+      <p className="why-head">{ex.headline}</p>
+      {ex.advantages.length > 0 && (
+        <ul className="why-list" data-kind="adv" aria-label={ex.second ? `Onde ${name(ex.first)} vence ${name(ex.second)}` : 'Vantagens'}>
+          {ex.advantages.map((p) => <li key={p.kind}><KindIcon kind={p.kind} /><span>{p.text}</span></li>)}
+        </ul>
+      )}
+      {ex.tradeoffs.length > 0 && (
+        <ul className="why-list" data-kind="trade" aria-label={ex.second ? `Onde ${name(ex.second)} leva vantagem` : 'Contrapontos'}>
+          {ex.tradeoffs.map((p) => <li key={p.kind}><KindIcon kind={p.kind} /><span>{p.text}</span></li>)}
+        </ul>
+      )}
+    </section>
+  )
+}
+
+function ChooseButton({ championId, focus, primary }: { championId: number; focus: Focus | null; primary?: boolean }): ReactElement {
+  const { dispatch, state } = useApp()
+  const chosen = state.myPick === championId
+  const locked = focus?.source === 'travado' && focus.champion === championId
+  if (locked) return <span className="chosen-badge"><CircleCheck size={14} aria-hidden="true" />Travado no cliente</span>
+  return (
+    <button type="button" className={`btn sm ${primary ? 'primary' : 'ghost'}`} onClick={() => {
+      dispatch({ type: 'myPick', champion: championId, toPlan: true })
+      // o botão sai da tela ao trocar de aba: o foco vai para a aba do plano (não se perde no <body>)
+      requestAnimationFrame(() => document.getElementById('view-tab-plan')?.focus())
+    }}>
+      <MapPin size={14} aria-hidden="true" />
+      {chosen ? 'Ver plano de jogo' : 'Escolher e ver plano de jogo'}
+    </button>
+  )
+}
+
+function Hero({ rec, champion, version, position, result, expanded, onToggle, champions, focus }: {
   rec: Recommendation
   champion: ChampionInfo | undefined
   version: string
@@ -68,6 +108,7 @@ function Hero({ rec, champion, version, position, result, expanded, onToggle, ch
   expanded: boolean
   onToggle: () => void
   champions: ReadonlyMap<number, ChampionInfo>
+  focus: Focus | null
 }): ReactElement {
   const id = useId()
   return (
@@ -90,13 +131,17 @@ function Hero({ rec, champion, version, position, result, expanded, onToggle, ch
           <QualityChip q={rec.quality} />
         </div>
         <ScoreMeter value={rec.score} />
+        <WhyFirst result={result} champions={champions} />
         <Reasons rec={rec} />
         <Risk rec={rec} />
         <p className="prov small"><Info size={13} aria-hidden="true" />{provenanceLine(result.provenance, rec, position)}</p>
-        <button type="button" className="btn ghost sm" aria-expanded={expanded} aria-controls={id} onClick={onToggle}>
-          {expanded ? 'Ocultar cálculo' : 'Ver como foi calculado'}
-          <ChevronDown size={14} className="chev" data-open={expanded || undefined} />
-        </button>
+        <div className="hero-actions">
+          <ChooseButton championId={rec.championId} focus={focus} primary />
+          <button type="button" className="btn ghost sm" aria-expanded={expanded} aria-controls={id} onClick={onToggle}>
+            {expanded ? 'Ocultar cálculo' : 'Ver como foi calculado'}
+            <ChevronDown size={14} className="chev" data-open={expanded || undefined} />
+          </button>
+        </div>
       </div>
       <div id={id} className="hero-details">
         <AnimatePresence initial={false}>
@@ -111,7 +156,7 @@ function Hero({ rec, champion, version, position, result, expanded, onToggle, ch
   )
 }
 
-function Row({ rec, rank, champion, version, position, result, expanded, onToggle, champions }: {
+function Row({ rec, rank, champion, version, position, result, expanded, onToggle, champions, focus }: {
   rec: Recommendation
   rank: number
   champion: ChampionInfo | undefined
@@ -121,6 +166,7 @@ function Row({ rec, rank, champion, version, position, result, expanded, onToggl
   expanded: boolean
   onToggle: () => void
   champions: ReadonlyMap<number, ChampionInfo>
+  focus: Focus | null
 }): ReactElement {
   const id = useId()
   const first = rec.reasons[0]
@@ -152,6 +198,7 @@ function Row({ rec, rank, champion, version, position, result, expanded, onToggl
           {expanded && (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }} style={{ overflow: 'hidden' }}>
               <div className="row-expanded">
+                <div className="row-actions"><ChooseButton championId={rec.championId} focus={focus} /></div>
                 <Risk rec={rec} />
                 <Details rec={rec} provenance={result.provenance} position={position} champions={champions} />
               </div>
@@ -222,9 +269,10 @@ interface Props {
   traits: TraitsTable
   standby: 'waiting' | 'idle' | null
   loading: boolean
+  focus: Focus | null
 }
 
-export function Recommendations({ result, position, standby, loading }: Props): ReactElement {
+export function Recommendations({ result, position, standby, loading, focus }: Props): ReactElement {
   const { state, dispatch, champions, version, setPrefs } = useApp()
   const items = result.items
   const announce = useMemo(() => (items.length ? `Recomendações atualizadas: ${items.map((i, n) => `${n + 1}, ${champions.get(i.championId)?.name ?? i.championId}`).join('; ')}.` : ''), [items, champions])
@@ -291,13 +339,13 @@ export function Recommendations({ result, position, standby, loading }: Props): 
         <div className="rec-grid">
           <div className="rec-hero-col">
             <AnimatePresence mode="wait" initial={false}>
-              <Hero key={top!.championId} rec={top!} champion={champions.get(top!.championId)} version={version} position={position} result={result} expanded={state.expanded === top!.championId} onToggle={() => toggle(top!.championId)} champions={champions} />
+              <Hero key={top!.championId} rec={top!} champion={champions.get(top!.championId)} version={version} position={position} result={result} expanded={state.expanded === top!.championId} onToggle={() => toggle(top!.championId)} champions={champions} focus={focus} />
             </AnimatePresence>
           </div>
           <ol className="rec-list" aria-label="Outras opções">
             <AnimatePresence initial={false} mode="popLayout">
               {rest.map((r, i) => (
-                <Row key={r.championId} rec={r} rank={i + 2} champion={champions.get(r.championId)} version={version} position={position} result={result} expanded={state.expanded === r.championId} onToggle={() => toggle(r.championId)} champions={champions} />
+                <Row key={r.championId} rec={r} rank={i + 2} champion={champions.get(r.championId)} version={version} position={position} result={result} expanded={state.expanded === r.championId} onToggle={() => toggle(r.championId)} champions={champions} focus={focus} />
               ))}
             </AnimatePresence>
           </ol>
@@ -307,7 +355,7 @@ export function Recommendations({ result, position, standby, loading }: Props): 
   }
 
   return (
-    <section className="recs" aria-label="Recomendações">
+    <section className="recs" id="view-panel-recs" role="tabpanel" aria-labelledby="view-tab-recs">
       <Banners result={result} mode={state.mode} />
       <div className="recs-scroll">
         <AnimatePresence mode="wait" initial={false}>
@@ -331,7 +379,7 @@ interface BannerItem {
   action?: { label: string; run: () => void }
 }
 
-function Banners({ result, mode }: { result: RecommendationResult; mode: Mode }): ReactElement | null {
+export function Banners({ result, mode }: { result: RecommendationResult; mode: Mode }): ReactElement | null {
   const { state, dispatch } = useApp()
   const items: BannerItem[] = []
   if (mode === 'demo') items.push({ id: 'demo', tone: 'demo', icon: <FlaskConical size={15} />, text: <><strong>Modo demonstração.</strong> Todos os números e campeões escolhidos são fictícios — não use para decidir uma partida real.</>, action: { label: 'Sair da demonstração', run: () => dispatch({ type: 'mode', mode: 'auto' }) } })

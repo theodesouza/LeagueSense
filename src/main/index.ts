@@ -162,7 +162,7 @@ const id = z.number().int().positive().max(100_000)
 const ApplyBuildSchema = z.object({
   champion: id,
   championName: z.string().min(1).max(40),
-  buildTitle: z.string().min(1).max(40),
+  buildTitle: z.string().min(1).max(60),
   items: z.array(z.object({ id, role: z.enum(['inicial', 'botas', 'principal', 'situacional']) })).max(40),
   runes: z
     .object({
